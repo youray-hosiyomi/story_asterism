@@ -1,5 +1,5 @@
 import { ReactNode, forwardRef, useImperativeHandle } from "react";
-import { useAuth } from "./hook";
+import { useGetAuth } from "./hook";
 import { AuthContext } from "./context";
 import { Auth } from "../../api/auth.api";
 
@@ -9,7 +9,7 @@ export type AuthProviderHandler = {
 };
 
 const AuthProvider = forwardRef<AuthProviderHandler, { children: ReactNode }>(({ children }, ref) => {
-  const { data: auth, isLoading, refetch } = useAuth();
+  const { data: auth, isLoading, refetch } = useGetAuth();
   useImperativeHandle(
     ref,
     () => {

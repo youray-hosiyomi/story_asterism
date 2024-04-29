@@ -31,8 +31,8 @@ const ProfileEditor: FC<{ auth: Auth }> = ({ auth }) => {
       }}
     >
       <div>
-        <label
-          htmlFor=""
+        <button
+          type="button"
           onClick={() => {
             select({
               api: profileStorageApi,
@@ -53,7 +53,7 @@ const ProfileEditor: FC<{ auth: Auth }> = ({ auth }) => {
             src={imageUrl}
             className="w-64 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
           />
-        </label>
+        </button>
       </div>
       <div>
         <UIFormControl labelText="ユーザ名">

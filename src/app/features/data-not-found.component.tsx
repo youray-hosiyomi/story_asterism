@@ -5,7 +5,7 @@ const DataNotFound: FC = () => {
   return (
     <>
       <DatabaseIcon className="h-16 w-16 stroke-1" />
-      <span>Data Not Found</span>
+      <span className="flex items-center">データが見つかりません。</span>
     </>
   );
 };

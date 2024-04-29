@@ -32,3 +32,11 @@ export const UILoadingArea: FC = () => {
     </>
   );
 };
+
+export const UILoadingBox: FC = () => {
+  return (
+    <div className="flex justify-center items-center w-full h-52 space-x-2">
+      <UILoadingArea />
+    </div>
+  );
+};

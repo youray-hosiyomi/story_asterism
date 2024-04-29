@@ -8,7 +8,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 const key = "auth";
 
-export const useAuth = () => {
+export const useGetAuth = () => {
   return useQuery({
     queryKey: [key],
     queryFn: getAuth,

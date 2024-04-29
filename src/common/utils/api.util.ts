@@ -11,7 +11,7 @@ import { SearchOptions } from "@supabase/storage-js";
 
 export type QueryApiFn<P, R> = (p: P) => Promise<R>;
 export type QueryApiFind<Model, PrimaryParams> = QueryApiFn<PrimaryParams, Model | null>;
-export type QueryApiList<Model, SearchParams> = QueryApiFn<SearchParams, Model[] | null>;
+export type QueryApiList<Model, SearchParams> = QueryApiFn<SearchParams, Model[]>;
 
 export interface QueryApiProps<Model, PrimaryParams, SearchParams, UniqueParams = PrimaryParams> {
   /** キー */
@@ -61,7 +61,7 @@ export class QueryApi<Model, PrimaryParams, SearchParams, UniqueParams = Primary
     return await this.findByUniqueFn(params);
   }
 
-  public async list(params: SearchParams): Promise<Model[] | null> {
+  public async list(params: SearchParams): Promise<Model[]> {
     if (!this.listFn) throw Error("list method is undefined");
     return await this.listFn(params);
   }
@@ -481,5 +481,20 @@ export class StorageImageApi {
         url: this.resetURL(file),
       };
     }
+  }
+
+  public useDownloadImage(fileName: string, folderPath?: string) {
+    return useQuery({
+      queryKey: [this.queryKey, fileName, folderPath],
+      queryFn: async () => {
+        try {
+          return await this.downloadImage(fileName, folderPath);
+        } catch (e) {
+          console.log(e);
+          toast.error("取得失敗");
+          throw e;
+        }
+      },
+    });
   }
 }

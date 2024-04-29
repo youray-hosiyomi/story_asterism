@@ -5,6 +5,7 @@ import { CSSProperties, FC, ReactNode, RefObject, useImperativeHandle, useRef } 
 export type UILayoutSideMenuProps = {
   content: ReactNode;
   header?: ReactNode;
+  footer?: ReactNode;
   width?: number;
   className?: string;
   style?: CSSProperties;
@@ -71,9 +72,9 @@ const UILayout: FC<UILayoutProps> = ({ children, sideMenu, header, handlerRef })
       <div className="drawer-content">{content}</div>
       <div className="drawer-side overflow-hidden z-40 shadow-lg border-r border-gray-200">
         <label htmlFor="drawer" className="drawer-overlay" aria-label="Close menu"></label>
-        <aside className={cn("bg-base-100 min-h-screen", sideMenu.className)} style={sideMenu.style}>
+        <aside className={cn("bg-base-100 min-h-screen flex flex-col", sideMenu.className)} style={sideMenu.style}>
           {sideMenu.header && (
-            <nav className="bg-base-100 sticky top-0 z-10 w-full gap-y-2 h-16 shadow-md flex">
+            <nav className="flex-none bg-base-100 w-full gap-y-2 h-16 shadow-md flex">
               <div className="flex-auto">{sideMenu.header}</div>
               <div className="flex-none md:hidden pr-6 flex items-center">
                 <label htmlFor="drawer" className="btn btn-sm rounded-full w-8 h-8 p-0" aria-label="Close menu">
@@ -82,7 +83,8 @@ const UILayout: FC<UILayoutProps> = ({ children, sideMenu, header, handlerRef })
               </div>
             </nav>
           )}
-          <div className="max-md:pr-6">{sideMenu.content}</div>
+          <div className="max-md:pr-6 flex-auto overflow-auto">{sideMenu.content}</div>
+          {sideMenu.footer && <div className="flex-none">{sideMenu.footer}</div>}
         </aside>
       </div>
     </div>
