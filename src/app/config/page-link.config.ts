@@ -1,4 +1,4 @@
-import { EarthIcon, HomeIcon, LogInIcon, SettingsIcon, TextIcon } from "lucide-react";
+import { BookTextIcon, EarthIcon, HomeIcon, LogInIcon, SettingsIcon, TextIcon, UsersIcon } from "lucide-react";
 import { makePageLinkMaps } from "../../common/utils/page.util";
 import { AuthPageProps, GuestPageProps, PageLinkConfig, PageLinkMap } from "../../common/type/page.type";
 import WS_Page from "@/app/pages/ws/page";
@@ -8,14 +8,26 @@ import WS_Universes_Page from "../pages/ws/universes/page";
 import WS_Universes_New_Page from "../pages/ws/universes/new/page";
 import Universe_Page from "../pages/universe/page";
 import Universe_Detail_Page from "../pages/universe/detail/page";
+import Universe_Episodes_Page from "../pages/universe/episodes/page";
+import Universe_Characters_Page from "../pages/universe/characters/page";
+import Universe_Characters_Detail_Page from "../pages/universe/characters/[character_id]/page";
+import Universe_Character_Layout from "../pages/universe/characters/layout";
+import Universe_Episodes_Detail_Page from "../pages/universe/episodes/[episode_id]/page";
+import Universe_Episode_Layout from "../pages/universe/episodes/layout";
 
 export type PagePath = GuestPagePath | AuthPagePath;
 export type GuestPagePath = "/login";
 export type AuthPagePath = WSPagePath;
 export type WSPagePath = "/ws" | "/ws/settings" | "/ws/universes" | "/ws/universes/new";
-export type UniversePagePath = "/universes/:universe_id" | "/universes/:universe_id/detail";
+export type UniversePagePath =
+  | "/universes/:universe_id"
+  | "/universes/:universe_id/episodes"
+  | "/universes/:universe_id/episodes/:episode_id"
+  | "/universes/:universe_id/characters"
+  | "/universes/:universe_id/characters/:character_id"
+  | "/universes/:universe_id/detail";
 
-export type UniversePageParam = "universe_id";
+export type UniversePageParam = "universe_id" | "character_id" | "episode_id";
 
 export const guestPageLinkConfig: PageLinkConfig<GuestPageProps, GuestPagePath> = {
   "/login": {
@@ -57,6 +69,32 @@ export const universePageLinkConfig: PageLinkConfig<AuthPageProps, UniversePageP
     name: "ホーム",
     page: Universe_Page,
     icon: HomeIcon,
+  },
+  "/universes/:universe_id/episodes": {
+    path: "/universes/:universe_id/episodes",
+    name: "エピソード",
+    page: Universe_Episodes_Page,
+    icon: BookTextIcon,
+    layout: Universe_Episode_Layout,
+  },
+  "/universes/:universe_id/episodes/:episode_id": {
+    path: "/universes/:universe_id/episodes/:episode_id",
+    parentPath: "/universes/:universe_id/episodes",
+    name: "詳細",
+    page: Universe_Episodes_Detail_Page,
+  },
+  "/universes/:universe_id/characters": {
+    path: "/universes/:universe_id/characters",
+    name: "キャラクター",
+    page: Universe_Characters_Page,
+    icon: UsersIcon,
+    layout: Universe_Character_Layout,
+  },
+  "/universes/:universe_id/characters/:character_id": {
+    path: "/universes/:universe_id/characters/:character_id",
+    parentPath: "/universes/:universe_id/characters",
+    name: "詳細",
+    page: Universe_Characters_Detail_Page,
   },
   "/universes/:universe_id/detail": {
     path: "/universes/:universe_id/detail",

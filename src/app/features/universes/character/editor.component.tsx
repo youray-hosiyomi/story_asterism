@@ -1,23 +1,25 @@
 import { TablesInsert } from "@supabase/database.type";
-import { universeApi } from "@/app/api/table/universe/universe.api";
-import { useState, FC } from "react";
-import { useImageContext } from "@/app/features/image/hook";
+import { FC, useEffect, useState } from "react";
+import { useImageContext } from "../../image/hook";
+import { characterApi } from "@/app/api/table/universe/character.api";
 import { universeStorageApi } from "@/app/api/storage/universe.storage.api";
-import { UniverseImg } from "@/app/features/universes/img.component";
+import { UniverseImg } from "../img.component";
 import UIFormControl from "@/common/ui/form-control.ui";
 
-interface UniverseEditorProps {
-  initReq: TablesInsert<"universes">;
-}
-
-const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
+const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [req, setReq] = useState(initReq);
   const { select } = useImageContext();
-  const upsert = universeApi.mutation.useUpsert();
+  const upsert = characterApi.mutation.useUpsert();
   function onUpsert() {
-    upsert.mutateAsync(req);
+    upsert.mutateAsync(req).then(() => {
+      setImageUrl(undefined);
+    });
   }
+  useEffect(() => {
+    setReq(initReq);
+    setImageUrl(undefined);
+  }, [initReq]);
   return (
     <form
       className="p-2"
@@ -33,7 +35,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
             onClick={() => {
               select({
                 api: universeStorageApi,
-                folderPath: req.id,
+                folderPath: req.universe_id,
                 prevFileName: universeStorageApi.fileNameByImageKey(req.image_key) ?? undefined,
                 onSelect(image) {
                   const key = universeStorageApi.imageKeyByFile(image.file);
@@ -47,7 +49,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
             }}
           >
             <UniverseImg
-              universe_id={req.id}
+              universe_id={req.universe_id}
               image_key={req.image_key}
               src={imageUrl}
               className="w-64 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
@@ -56,7 +58,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
         </div>
       )}
       <div>
-        <UIFormControl labelText="ユニバース名">
+        <UIFormControl labelText="キャラクター名">
           <input
             type="text"
             className="input input-bordered"
@@ -93,4 +95,4 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
   );
 };
 
-export default UniverseEditor;
+export default Character_Editor;

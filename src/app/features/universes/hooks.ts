@@ -1,4 +1,4 @@
-import { universeApi } from "@/app/api/table/universe.api";
+import { universeApi } from "@/app/api/table/universe/universe.api";
 import { UniverseUnion, getUniverseUnion } from "@/app/api/union/universe.union.api";
 import { useQ } from "@/common/utils/api.util";
 import { useContext } from "react";

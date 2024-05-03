@@ -35,7 +35,11 @@ const Universe_Layout: AuthPageFC = ({ auth }) => {
         handlerRef={handlerRef}
         header={{
           leftItems: (
-            <UniverseRouteLink path="/universes/:universe_id" params={params}>
+            <UniverseRouteLink
+              path="/universes/:universe_id"
+              universe_id={params.universe_id}
+              character_id={params.character_id}
+            >
               <h1 className="text-lg font-bold whitespace-nowrap text-ellipsis overflow-hidden">
                 {universeUnion.universe.name}
               </h1>
@@ -56,7 +60,7 @@ const Universe_Layout: AuthPageFC = ({ auth }) => {
                     const path = generatePath(l.path, params);
                     const isActive: boolean = path == location.pathname;
                     return (
-                      <li key={path} title={l.name} className="max-md:tooltip max-md:tooltip-right" data-tip={l.name}>
+                      <li key={path} title={l.name} className="" data-tip={l.name}>
                         <Link
                           to={path}
                           className={cn(

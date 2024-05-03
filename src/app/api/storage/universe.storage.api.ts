@@ -1,6 +1,5 @@
 import { StorageImage, StorageImageApi } from "@/common/utils/api.util";
 import { supabase } from "@supabase/client";
-import { Tables, TablesInsert } from "@supabase/database.type";
 
 export class UniverseStorageApi extends StorageImageApi {
   extends: string = "jpeg";
@@ -8,15 +7,16 @@ export class UniverseStorageApi extends StorageImageApi {
     super(supabase, "universes");
   }
   async downloadImageByUniverse(
-    universe: Tables<"universes"> | TablesInsert<"universes">,
+    universe_id: string = "",
+    image_key: string | null | undefined,
   ): Promise<StorageImage | null> {
-    const fileName = this.fileNameByUniverse(universe);
+    const fileName = this.fileNameByImageKey(image_key);
     if (!fileName) return null;
-    return await this.downloadImage(fileName, universe.id);
+    return await this.downloadImage(fileName, universe_id);
   }
-  fileNameByUniverse(universe: Tables<"universes"> | TablesInsert<"universes">): string | null {
-    if (!universe.image_key || universe.image_key == "") return null;
-    return universe.image_key + "." + this.extends;
+  fileNameByImageKey(image_key: string | null | undefined): string | null {
+    if (!image_key || image_key == "") return null;
+    return image_key + "." + this.extends;
   }
   imageKeyByFile(file: File): string {
     return file.name.replace("." + this.extends, "");

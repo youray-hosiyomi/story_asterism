@@ -1,6 +1,6 @@
 import { PageLinkConfig } from "@/common/type/page.type";
 import { FC, MouseEventHandler, ReactNode, useMemo } from "react";
-import { Link, Params, generatePath } from "react-router-dom";
+import { Link, generatePath } from "react-router-dom";
 import {
   UniversePageParam,
   UniversePagePath,
@@ -44,13 +44,17 @@ export const WSRouteLink: FC<BaseRouteLinkProps<WSPagePath>> = (props) => {
   return <RouteLink pageLinkConfig={wsPageLinkConfig} {...props} />;
 };
 
-export const UniverseRouteLink: FC<BaseRouteLinkProps<UniversePagePath> & { params?: Params<UniversePageParam> }> = ({
-  params,
+export const UniverseRouteLink: FC<BaseRouteLinkProps<UniversePagePath> & { [key in UniversePageParam]?: string }> = ({
+  universe_id,
+  character_id,
+  episode_id,
   ...props
 }) => {
   function replacePath(path: UniversePagePath) {
     return generatePath(path, {
-      universe_id: params?.universe_id ?? null,
+      universe_id: universe_id ?? null,
+      character_id: character_id ?? null,
+      episode_id: episode_id ?? null,
     });
   }
   return <RouteLink pageLinkConfig={universePageLinkConfig} {...props} replacePath={replacePath} />;

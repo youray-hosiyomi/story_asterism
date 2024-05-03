@@ -1,7 +1,7 @@
 import { AuthPageFC } from "@/common/type/page.type";
 import Ws_Template from "@/app/pages/ws/template";
 import UniverseEditor from "@/app/features/universes/editor.component";
-import { universeApi } from "@/app/api/table/universe.api";
+import { universeApi } from "@/app/api/table/universe/universe.api";
 
 const WS_Universes_New_Page: AuthPageFC = ({ auth }) => {
   return (

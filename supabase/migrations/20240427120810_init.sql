@@ -20,7 +20,7 @@ $$ LANGUAGE plpgsql;
 CREATE
 OR REPLACE FUNCTION set_updated () RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = now();
+NEW.updated_at = now();
   IF auth.uid() IS NOT NULL THEN
     NEW.updated_by = auth.uid();
   END IF;

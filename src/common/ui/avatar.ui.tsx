@@ -1,6 +1,7 @@
-import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { FC, HTMLAttributes, ReactNode } from "react";
 import { cn } from "../utils/classname.util";
 import { UILoading } from "./loading.ui";
+import { useQ } from "../utils/api.util";
 
 export interface UIAvatarProps {
   className?: string;
@@ -10,59 +11,58 @@ export interface UIAvatarProps {
   placefolder?: ReactNode;
   alt?: string;
   onErrorSrc?: string;
-  getSrc?: () => Promise<string | undefined>;
 }
 
-export const UIAvatar: FC<UIAvatarProps> = ({
+export const UIAvatar: FC<UIAvatarProps> = ({ className, src, alt, placefolder, onErrorSrc, role, tabIndex }) => {
+  const isPlacefolder: boolean = !src && !!placefolder;
+  return (
+    <div className={cn("avatar", isPlacefolder ? "placeholder" : "")} role={role} tabIndex={tabIndex}>
+      <div className={cn(className ?? "w-8 rounded")}>
+        {!isPlacefolder ? (
+          <img
+            src={src ?? onErrorSrc}
+            alt={alt}
+            onError={(ev) => {
+              if (onErrorSrc) ev.currentTarget.src = onErrorSrc;
+            }}
+          />
+        ) : (
+          placefolder
+        )}
+      </div>
+    </div>
+  );
+};
+
+export interface UILoadingAvatarProps extends UIAvatarProps {
+  getSrc: () => Promise<string | null>;
+  getKey: string;
+}
+
+export const UILoadingAvatar: FC<UILoadingAvatarProps> = ({
   className,
   src: outerSrc,
-  alt,
   placefolder,
-  onErrorSrc,
-  role,
-  tabIndex,
   getSrc,
+  getKey: key,
+  ...props
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [src, setSrc] = useState<string | undefined>(outerSrc);
-  const isPlacefolder: boolean = !src && !!placefolder;
-  useEffect(() => {
-    if ((!outerSrc || outerSrc.length == 0) && getSrc) {
-      setIsLoading(true);
-      getSrc()
-        .then((newSrc) => {
-          setSrc(newSrc);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setSrc(outerSrc);
-    }
-  }, [outerSrc, getSrc]);
+  const { data: imageSrc, isLoading } = useQ(key, {}, getSrc);
+  const src = outerSrc ?? imageSrc ?? undefined;
   return (
-    <div className={cn("avatar", isLoading || isPlacefolder ? "placeholder" : "")} role={role} tabIndex={tabIndex}>
-      {isLoading ? (
-        <>
+    <UIAvatar
+      {...props}
+      className={className}
+      src={src}
+      placefolder={
+        isLoading ? (
           <div className={cn(className ?? "w-8 rounded")}>
             <UILoading />
           </div>
-        </>
-      ) : (
-        <div className={cn(className ?? "w-8 rounded")}>
-          {!isPlacefolder ? (
-            <img
-              src={src ?? onErrorSrc}
-              alt={alt}
-              onError={(ev) => {
-                if (onErrorSrc) ev.currentTarget.src = onErrorSrc;
-              }}
-            />
-          ) : (
-            placefolder
-          )}
-        </div>
-      )}
-    </div>
+        ) : (
+          placefolder
+        )
+      }
+    />
   );
 };

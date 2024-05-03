@@ -141,6 +141,7 @@ export function useM<P, R = void>(key: string, fn: MutationApiFn<P, R>, params?:
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [key],
+        type: "active",
         // exact: true,
       });
     },

@@ -5,7 +5,9 @@ import { generatePath, useLocation, useParams } from "react-router-dom";
 import { UniversePageParam, universePageLinkConfig } from "../../config/page-link.config";
 import UIBreadcrumb from "@/common/ui/breadcrumbs.ui";
 
-const Universe_Template: FC<UIPageProps & { subItems?: ReactNode }> = ({ header: outerHeader, subItems, ...props }) => {
+const Universe_Template: FC<
+  UIPageProps & { subItems?: ReactNode; replaceContent?: (path: string, prevContent: ReactNode) => ReactNode }
+> = ({ header: outerHeader, subItems, replaceContent, ...props }) => {
   const params = useParams<UniversePageParam>();
   const location = useLocation();
   const replacePath = useCallback(
@@ -28,6 +30,7 @@ const Universe_Template: FC<UIPageProps & { subItems?: ReactNode }> = ({ header:
               firstItem={universePageLinkConfig["/universes/:universe_id"]}
               items={links}
               replacePath={replacePath}
+              replaceContent={replaceContent}
             />
             <div className="flex items-center space-x-2">{subItems}</div>
           </div>
@@ -36,7 +39,7 @@ const Universe_Template: FC<UIPageProps & { subItems?: ReactNode }> = ({ header:
       );
     }
     return outerHeader;
-  }, [breadcrumbsLinks, outerHeader, replacePath, subItems]);
+  }, [breadcrumbsLinks, outerHeader, replaceContent, replacePath, subItems]);
   return <UIPage {...props} header={header} />;
 };
 

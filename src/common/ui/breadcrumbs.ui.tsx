@@ -14,9 +14,10 @@ interface UIBreadcrumbProps {
   firstItem?: UIBreadcrumbItem;
   items: UIBreadcrumbItem[];
   replacePath?: (prevPath: string) => string;
+  replaceContent?: (path: string, prevContent: ReactNode) => ReactNode;
 }
 
-const UIBreadcrumb: FC<UIBreadcrumbProps> = ({ className, firstItem, items, replacePath }) => {
+const UIBreadcrumb: FC<UIBreadcrumbProps> = ({ className, firstItem, items, replacePath, replaceContent }) => {
   return (
     <div className={cn(className, "breadcrumbs text-sm px-1")}>
       <ul>
@@ -28,11 +29,17 @@ const UIBreadcrumb: FC<UIBreadcrumbProps> = ({ className, firstItem, items, repl
           </li>
         )}
         {items.map((item, i) => {
+          const path = !replacePath ? item.path : replacePath(item.path);
+          const content = (
+            <>
+              {item.icon && <item.icon className="w-4 h-4" />}
+              <span>{item.name}</span>
+            </>
+          );
           return (
             <li key={i}>
-              <Link to={!replacePath ? item.path : replacePath(item.path)} className="flex items-center space-x-1">
-                {item.icon && <item.icon className="w-4 h-4" />}
-                <span>{item.name}</span>
+              <Link to={path} className="flex items-center space-x-1">
+                {!replaceContent ? content : replaceContent(path, content)}
               </Link>
             </li>
           );

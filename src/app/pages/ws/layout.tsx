@@ -41,7 +41,7 @@ const WS_Layout: AuthPageFC = ({ auth }) => {
                   const isActive: boolean = l.path == location.pathname;
                   const isSubActive: boolean = l.childPathes.indexOf(location.pathname) !== -1;
                   return (
-                    <li key={l.path} title={l.name} className="max-md:tooltip max-md:tooltip-right" data-tip={l.name}>
+                    <li key={l.path} title={l.name} className="" data-tip={l.name}>
                       <Link
                         to={l.path}
                         className={cn(

@@ -3,9 +3,9 @@ CREATE TABLE
   universes (
     id UUID DEFAULT uuid_generate_v4 (),
     owner_id UUID REFERENCES auth.users ON DELETE SET NULL, -- ユーザ
-    NAME VARCHAR(25) NOT NULL,
+    NAME VARCHAR(55) NOT NULL,
     detail TEXT,
-    image_key TEXT, -- 画像パス("universes") ※例: "[universeId]/[imageKey]"
+    image_key UUID, -- 画像パス("universes") ※例: "[universeId]/[imageKey]"
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     created_by UUID REFERENCES auth.users ON DELETE CASCADE ON UPDATE CASCADE,
