@@ -1,465 +1,469 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export interface Database {
   graphql_public: {
     Tables: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       graphql: {
         Args: {
-          operationName?: string
-          query?: string
-          variables?: Json
-          extensions?: Json
-        }
-        Returns: Json
-      }
-    }
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+          extensions?: Json;
+        };
+        Returns: Json;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       characters: {
         Row: {
-          created_at: string | null
-          created_by: string | null
-          detail: string | null
-          id: string
-          image_key: string | null
-          name: string
-          universe_id: string
-          updated_at: string | null
-          updated_by: string | null
-        }
+          created_at: string | null;
+          created_by: string | null;
+          detail: string | null;
+          id: string;
+          image_key: string | null;
+          name: string;
+          seq: number | null;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
         Insert: {
-          created_at?: string | null
-          created_by?: string | null
-          detail?: string | null
-          id?: string
-          image_key?: string | null
-          name: string
-          universe_id: string
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          image_key?: string | null;
+          name: string;
+          seq?: number | null;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Update: {
-          created_at?: string | null
-          created_by?: string | null
-          detail?: string | null
-          id?: string
-          image_key?: string | null
-          name?: string
-          universe_id?: string
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          image_key?: string | null;
+          name?: string;
+          seq?: number | null;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "characters_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "characters_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "characters_universe_id_fkey"
-            columns: ["universe_id"]
-            isOneToOne: false
-            referencedRelation: "universes"
-            referencedColumns: ["id"]
+            foreignKeyName: "characters_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "characters_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "characters_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       episodes: {
         Row: {
-          content: string | null
-          created_at: string | null
-          created_by: string | null
-          id: string
-          part_1: string | null
-          part_2: string | null
-          part_3: string | null
-          part_4: string | null
-          seq: number | null
-          summary: string | null
-          title: string
-          universe_id: string
-          updated_at: string | null
-          updated_by: string | null
-        }
+          content: string | null;
+          created_at: string | null;
+          created_by: string | null;
+          id: string;
+          part_1: string | null;
+          part_2: string | null;
+          part_3: string | null;
+          part_4: string | null;
+          seq: number | null;
+          summary: string | null;
+          title: string;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
         Insert: {
-          content?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          id?: string
-          part_1?: string | null
-          part_2?: string | null
-          part_3?: string | null
-          part_4?: string | null
-          seq?: number | null
-          summary?: string | null
-          title: string
-          universe_id: string
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          content?: string | null;
+          created_at?: string | null;
+          created_by?: string | null;
+          id?: string;
+          part_1?: string | null;
+          part_2?: string | null;
+          part_3?: string | null;
+          part_4?: string | null;
+          seq?: number | null;
+          summary?: string | null;
+          title: string;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Update: {
-          content?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          id?: string
-          part_1?: string | null
-          part_2?: string | null
-          part_3?: string | null
-          part_4?: string | null
-          seq?: number | null
-          summary?: string | null
-          title?: string
-          universe_id?: string
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          content?: string | null;
+          created_at?: string | null;
+          created_by?: string | null;
+          id?: string;
+          part_1?: string | null;
+          part_2?: string | null;
+          part_3?: string | null;
+          part_4?: string | null;
+          seq?: number | null;
+          summary?: string | null;
+          title?: string;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "episodes_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "episodes_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "episodes_universe_id_fkey"
-            columns: ["universe_id"]
-            isOneToOne: false
-            referencedRelation: "universes"
-            referencedColumns: ["id"]
+            foreignKeyName: "episodes_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "episodes_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "episodes_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       profiles: {
         Row: {
-          avatar_key: string | null
-          detail: string | null
-          uid: string
-          updated_at: string | null
-          username: string | null
-        }
+          avatar_key: string | null;
+          detail: string | null;
+          uid: string;
+          updated_at: string | null;
+          username: string | null;
+        };
         Insert: {
-          avatar_key?: string | null
-          detail?: string | null
-          uid: string
-          updated_at?: string | null
-          username?: string | null
-        }
+          avatar_key?: string | null;
+          detail?: string | null;
+          uid: string;
+          updated_at?: string | null;
+          username?: string | null;
+        };
         Update: {
-          avatar_key?: string | null
-          detail?: string | null
-          uid?: string
-          updated_at?: string | null
-          username?: string | null
-        }
+          avatar_key?: string | null;
+          detail?: string | null;
+          uid?: string;
+          updated_at?: string | null;
+          username?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "profiles_uid_fkey"
-            columns: ["uid"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+            foreignKeyName: "profiles_uid_fkey";
+            columns: ["uid"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       universes: {
         Row: {
-          created_at: string | null
-          created_by: string | null
-          detail: string | null
-          id: string
-          image_key: string | null
-          name: string
-          owner_id: string | null
-          updated_at: string | null
-          updated_by: string | null
-        }
+          created_at: string | null;
+          created_by: string | null;
+          detail: string | null;
+          id: string;
+          image_key: string | null;
+          name: string;
+          owner_id: string | null;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
         Insert: {
-          created_at?: string | null
-          created_by?: string | null
-          detail?: string | null
-          id?: string
-          image_key?: string | null
-          name: string
-          owner_id?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          image_key?: string | null;
+          name: string;
+          owner_id?: string | null;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Update: {
-          created_at?: string | null
-          created_by?: string | null
-          detail?: string | null
-          id?: string
-          image_key?: string | null
-          name?: string
-          owner_id?: string | null
-          updated_at?: string | null
-          updated_by?: string | null
-        }
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          image_key?: string | null;
+          name?: string;
+          owner_id?: string | null;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "universes_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "universes_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "universes_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "universes_owner_id_fkey";
+            columns: ["owner_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "universes_updated_by_fkey"
-            columns: ["updated_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-    }
+            foreignKeyName: "universes_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       auth_check_universe: {
         Args: {
-          universe_id: string
-        }
-        Returns: boolean
-      }
+          universe_id: string;
+        };
+        Returns: boolean;
+      };
+      exist_character_by_seq: {
+        Args: {
+          universe_id: string;
+          seq: number;
+        };
+        Returns: boolean;
+      };
       exist_episode_by_seq: {
         Args: {
-          universe_id: string
-          seq: number
-        }
-        Returns: boolean
-      }
-    }
+          universe_id: string;
+          seq: number;
+        };
+        Returns: boolean;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   storage: {
     Tables: {
       buckets: {
         Row: {
-          allowed_mime_types: string[] | null
-          avif_autodetection: boolean | null
-          created_at: string | null
-          file_size_limit: number | null
-          id: string
-          name: string
-          owner: string | null
-          owner_id: string | null
-          public: boolean | null
-          updated_at: string | null
-        }
+          allowed_mime_types: string[] | null;
+          avif_autodetection: boolean | null;
+          created_at: string | null;
+          file_size_limit: number | null;
+          id: string;
+          name: string;
+          owner: string | null;
+          owner_id: string | null;
+          public: boolean | null;
+          updated_at: string | null;
+        };
         Insert: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
-          id: string
-          name: string
-          owner?: string | null
-          owner_id?: string | null
-          public?: boolean | null
-          updated_at?: string | null
-        }
+          allowed_mime_types?: string[] | null;
+          avif_autodetection?: boolean | null;
+          created_at?: string | null;
+          file_size_limit?: number | null;
+          id: string;
+          name: string;
+          owner?: string | null;
+          owner_id?: string | null;
+          public?: boolean | null;
+          updated_at?: string | null;
+        };
         Update: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
-          id?: string
-          name?: string
-          owner?: string | null
-          owner_id?: string | null
-          public?: boolean | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
+          allowed_mime_types?: string[] | null;
+          avif_autodetection?: boolean | null;
+          created_at?: string | null;
+          file_size_limit?: number | null;
+          id?: string;
+          name?: string;
+          owner?: string | null;
+          owner_id?: string | null;
+          public?: boolean | null;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
       migrations: {
         Row: {
-          executed_at: string | null
-          hash: string
-          id: number
-          name: string
-        }
+          executed_at: string | null;
+          hash: string;
+          id: number;
+          name: string;
+        };
         Insert: {
-          executed_at?: string | null
-          hash: string
-          id: number
-          name: string
-        }
+          executed_at?: string | null;
+          hash: string;
+          id: number;
+          name: string;
+        };
         Update: {
-          executed_at?: string | null
-          hash?: string
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
+          executed_at?: string | null;
+          hash?: string;
+          id?: number;
+          name?: string;
+        };
+        Relationships: [];
+      };
       objects: {
         Row: {
-          bucket_id: string | null
-          created_at: string | null
-          id: string
-          last_accessed_at: string | null
-          metadata: Json | null
-          name: string | null
-          owner: string | null
-          owner_id: string | null
-          path_tokens: string[] | null
-          updated_at: string | null
-          version: string | null
-        }
+          bucket_id: string | null;
+          created_at: string | null;
+          id: string;
+          last_accessed_at: string | null;
+          metadata: Json | null;
+          name: string | null;
+          owner: string | null;
+          owner_id: string | null;
+          path_tokens: string[] | null;
+          updated_at: string | null;
+          version: string | null;
+        };
         Insert: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          version?: string | null
-        }
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          owner_id?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+          version?: string | null;
+        };
         Update: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          version?: string | null
-        }
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          owner_id?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+          version?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "objects_bucketId_fkey"
-            columns: ["bucket_id"]
-            isOneToOne: false
-            referencedRelation: "buckets"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-    }
+            foreignKeyName: "objects_bucketId_fkey";
+            columns: ["bucket_id"];
+            isOneToOne: false;
+            referencedRelation: "buckets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       can_insert_object: {
         Args: {
-          bucketid: string
-          name: string
-          owner: string
-          metadata: Json
-        }
-        Returns: undefined
-      }
+          bucketid: string;
+          name: string;
+          owner: string;
+          metadata: Json;
+        };
+        Returns: undefined;
+      };
       extension: {
         Args: {
-          name: string
-        }
-        Returns: string
-      }
+          name: string;
+        };
+        Returns: string;
+      };
       filename: {
         Args: {
-          name: string
-        }
-        Returns: string
-      }
+          name: string;
+        };
+        Returns: string;
+      };
       foldername: {
         Args: {
-          name: string
-        }
-        Returns: unknown
-      }
+          name: string;
+        };
+        Returns: unknown;
+      };
       get_size_by_bucket: {
-        Args: Record<PropertyKey, never>
+        Args: Record<PropertyKey, never>;
         Returns: {
-          size: number
-          bucket_id: string
-        }[]
-      }
+          size: number;
+          bucket_id: string;
+        }[];
+      };
       search: {
         Args: {
-          prefix: string
-          bucketname: string
-          limits?: number
-          levels?: number
-          offsets?: number
-          search?: string
-          sortcolumn?: string
-          sortorder?: string
-        }
+          prefix: string;
+          bucketname: string;
+          limits?: number;
+          levels?: number;
+          offsets?: number;
+          search?: string;
+          sortcolumn?: string;
+          sortorder?: string;
+        };
         Returns: {
-          name: string
-          id: string
-          updated_at: string
-          created_at: string
-          last_accessed_at: string
-          metadata: Json
-        }[]
-      }
-    }
+          name: string;
+          id: string;
+          updated_at: string;
+          created_at: string;
+          last_accessed_at: string;
+          metadata: Json;
+        }[];
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
 }
 
 export type Tables<
@@ -469,76 +473,67 @@ export type Tables<
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : never
+  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    ? (Database["public"]["Tables"] & Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
-    | { schema: keyof Database },
+  PublicTableNameOrOptions extends keyof Database["public"]["Tables"] | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : never
+    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
-    | { schema: keyof Database },
+  PublicTableNameOrOptions extends keyof Database["public"]["Tables"] | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : never
+    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
-    | { schema: keyof Database },
+  PublicEnumNameOrOptions extends keyof Database["public"]["Enums"] | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
-
+    ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+    : never;

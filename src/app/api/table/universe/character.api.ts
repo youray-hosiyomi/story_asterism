@@ -15,7 +15,7 @@ class CharacterApi extends ApiHandler<"characters", "id" | "universe_id", Charac
       handlers: [
         (prev, params) => {
           prev.eq("universe_id", params.universe_id);
-          return prev;
+          return prev.order("seq", { ascending: true });
         },
       ],
     });
