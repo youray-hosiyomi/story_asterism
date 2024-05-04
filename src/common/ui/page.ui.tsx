@@ -11,13 +11,13 @@ const UIPage: FC<UIPageProps> = ({ footer, header, className, ...props }) => {
     <>
       {header ? (
         <>
-          <div className="flex-none bg-base-200 shadow-md border-b border-gray-200">{header}</div>
+          <div className="flex-none bg-base-200 border-b border-gray-200">{header}</div>
         </>
       ) : null}
       <main {...props} className={cn(className, "flex-auto overflow-auto")} />
       {footer ? (
         <>
-          <div className="flex-none bg-base-200 shadow-md border-t border-gray-200">{footer}</div>
+          <div className="flex-none bg-base-200 border-t border-gray-200">{footer}</div>
         </>
       ) : null}
     </>

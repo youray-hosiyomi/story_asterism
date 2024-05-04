@@ -1,25 +1,31 @@
 import { TablesInsert } from "@supabase/database.type";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useImageContext } from "../../image/hook";
 import { characterApi } from "@/app/api/table/universe/character.api";
 import { universeStorageApi } from "@/app/api/storage/universe.storage.api";
 import { UniverseImg } from "../img.component";
 import UIFormControl from "@/common/ui/form-control.ui";
+import { useKeyActionEffect } from "@/common/utils/key-action.util";
 
 const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [req, setReq] = useState(initReq);
   const { select } = useImageContext();
   const upsert = characterApi.mutation.useUpsert();
-  function onUpsert() {
+  const onUpsert = useCallback(() => {
     upsert.mutateAsync(req).then(() => {
       setImageUrl(undefined);
     });
-  }
+  }, [req, upsert]);
   useEffect(() => {
     setReq(initReq);
     setImageUrl(undefined);
   }, [initReq]);
+  useKeyActionEffect({
+    onCtrlS() {
+      onUpsert();
+    },
+  });
   return (
     <form
       className="p-2"
@@ -74,7 +80,7 @@ const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq
         </UIFormControl>
         <UIFormControl labelText="詳細">
           <textarea
-            className="textarea textarea-bordered"
+            className="textarea textarea-bordered min-h-52"
             value={req.detail ?? ""}
             onChange={(ev) => {
               const detail = ev.target.value;
@@ -86,7 +92,7 @@ const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq
           />
         </UIFormControl>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center sticky bottom-4">
         <button type="submit" className="btn btn-success">
           登録
         </button>

@@ -1,19 +1,13 @@
-import { episodeApi } from "@/app/api/table/universe/episode.api";
-import { UILoadingBox } from "@/common/ui/loading.ui";
 import { FC } from "react";
-import { UniverseRouteNavigate } from "../../route-navigate.component";
 import Episode_Editor from "./editor.component";
-import { useParams } from "react-router-dom";
-import { UniversePageParam } from "@/app/config/page-link.config";
+import { useEpisodeDetailContext } from "./hooks";
+import { UILoadingBox } from "@/common/ui/loading.ui";
+import { UniverseRouteNavigate } from "../../route-navigate.component";
 import { useUniverseUnion } from "../hooks";
 
 const Episode_Detail: FC = () => {
   const { universe } = useUniverseUnion();
-  const { episode_id } = useParams<UniversePageParam>();
-  const { data: episode, isLoading } = episodeApi.query.useFind({
-    id: episode_id ?? "",
-    universe_id: universe.id,
-  });
+  const { episode, isLoading } = useEpisodeDetailContext();
   if (isLoading) {
     return <UILoadingBox />;
   }

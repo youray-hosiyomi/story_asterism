@@ -15,3 +15,15 @@ export const CharacterContext = createContext<CharacterContextProps>({
     initReq;
   },
 });
+
+interface CharacterDetailContextProps {
+  character: Tables<"characters"> | null | undefined;
+  isLoading: boolean;
+  refetch: () => void;
+}
+
+export const CharacterDetailContext = createContext<CharacterDetailContextProps>({
+  character: null,
+  isLoading: false,
+  refetch() {},
+});

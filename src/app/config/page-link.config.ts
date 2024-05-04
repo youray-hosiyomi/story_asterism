@@ -14,6 +14,8 @@ import Universe_Characters_Detail_Page from "../pages/universe/characters/[chara
 import Universe_Character_Layout from "../pages/universe/characters/layout";
 import Universe_Episodes_Detail_Page from "../pages/universe/episodes/[episode_id]/page";
 import Universe_Episode_Layout from "../pages/universe/episodes/layout";
+import Universe_Episodes_Detail_Layout from "../pages/universe/episodes/[episode_id]/layout";
+import Universe_Characters_Detail_Layout from "../pages/universe/characters/[character_id]/layout";
 
 export type PagePath = GuestPagePath | AuthPagePath;
 export type GuestPagePath = "/login";
@@ -82,6 +84,7 @@ export const universePageLinkConfig: PageLinkConfig<AuthPageProps, UniversePageP
     parentPath: "/universes/:universe_id/episodes",
     name: "詳細",
     page: Universe_Episodes_Detail_Page,
+    layout: Universe_Episodes_Detail_Layout,
   },
   "/universes/:universe_id/characters": {
     path: "/universes/:universe_id/characters",
@@ -95,6 +98,7 @@ export const universePageLinkConfig: PageLinkConfig<AuthPageProps, UniversePageP
     parentPath: "/universes/:universe_id/characters",
     name: "詳細",
     page: Universe_Characters_Detail_Page,
+    layout: Universe_Characters_Detail_Layout,
   },
   "/universes/:universe_id/detail": {
     path: "/universes/:universe_id/detail",

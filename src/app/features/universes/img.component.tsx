@@ -16,7 +16,6 @@ export const UniverseImg: FC<UniverseImgProps> = ({
   ...props
 }) => {
   const key = useMemo(() => {
-    console.log(universe_id, image_key);
     return universe_id + "_" + image_key;
   }, [image_key, universe_id]);
   const getSrc = useCallback(async (): Promise<string | null> => {

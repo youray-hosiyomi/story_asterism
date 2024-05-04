@@ -1,10 +1,11 @@
 import { TablesInsert } from "@supabase/database.type";
 import { universeApi } from "@/app/api/table/universe/universe.api";
-import { useState, FC } from "react";
+import { useState, FC, useCallback } from "react";
 import { useImageContext } from "@/app/features/image/hook";
 import { universeStorageApi } from "@/app/api/storage/universe.storage.api";
 import { UniverseImg } from "@/app/features/universes/img.component";
 import UIFormControl from "@/common/ui/form-control.ui";
+import { useKeyActionEffect } from "@/common/utils/key-action.util";
 
 interface UniverseEditorProps {
   initReq: TablesInsert<"universes">;
@@ -15,9 +16,16 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
   const [req, setReq] = useState(initReq);
   const { select } = useImageContext();
   const upsert = universeApi.mutation.useUpsert();
-  function onUpsert() {
-    upsert.mutateAsync(req);
-  }
+  const onUpsert = useCallback(() => {
+    upsert.mutateAsync(req).then(() => {
+      setImageUrl(undefined);
+    });
+  }, [req, upsert]);
+  useKeyActionEffect({
+    onCtrlS() {
+      onUpsert();
+    },
+  });
   return (
     <form
       className="p-2"
@@ -27,7 +35,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
       }}
     >
       {initReq.id && (
-        <div>
+        <div className="flex items-center justify-center">
           <button
             type="button"
             onClick={() => {
@@ -50,7 +58,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
               universe_id={req.id}
               image_key={req.image_key}
               src={imageUrl}
-              className="w-64 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
+              className="w-40 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
             />
           </button>
         </div>
@@ -72,7 +80,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
         </UIFormControl>
         <UIFormControl labelText="詳細">
           <textarea
-            className="textarea textarea-bordered"
+            className="textarea textarea-bordered min-h-52"
             value={req.detail ?? ""}
             onChange={(ev) => {
               const detail = ev.target.value;
@@ -84,7 +92,7 @@ const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
           />
         </UIFormControl>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center sticky bottom-4">
         <button type="submit" className="btn btn-success">
           登録
         </button>

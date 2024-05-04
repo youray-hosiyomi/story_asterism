@@ -15,3 +15,15 @@ export const EpisodeContext = createContext<EpisodeContextProps>({
     initReq;
   },
 });
+
+interface EpisodeDetailContextProps {
+  episode: Tables<"episodes"> | null | undefined;
+  isLoading: boolean;
+  refetch: () => void;
+}
+
+export const EpisodeDetailContext = createContext<EpisodeDetailContextProps>({
+  episode: null,
+  isLoading: false,
+  refetch() {},
+});

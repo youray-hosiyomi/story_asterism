@@ -11,6 +11,7 @@ import { UILoadingBox } from "@/common/ui/loading.ui";
 import { UniverseContext } from "@/app/features/universes/context";
 import { LogOutIcon } from "lucide-react";
 import { UniverseRouteLink, WSRouteLink } from "@/app/features/route-link.component";
+import { UniverseImg } from "@/app/features/universes/img.component";
 
 const linkMaps = universePageLinkMaps;
 
@@ -39,7 +40,15 @@ const Universe_Layout: AuthPageFC = ({ auth }) => {
               path="/universes/:universe_id"
               universe_id={params.universe_id}
               character_id={params.character_id}
+              className="flex items-center space-x-2"
             >
+              {universeUnion.universe.image_key && (
+                <UniverseImg
+                  universe_id={universeUnion.universe.id}
+                  image_key={universeUnion.universe.image_key}
+                  className="w-7 rounded-lg bg-base-100"
+                />
+              )}
               <h1 className="text-lg font-bold whitespace-nowrap text-ellipsis overflow-hidden">
                 {universeUnion.universe.name}
               </h1>
