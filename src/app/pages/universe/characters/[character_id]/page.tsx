@@ -3,7 +3,7 @@ import Character_Detail from "@/app/features/universes/character/detail.componen
 
 const Universe_Characters_Detail_Page: AuthPageFC = () => {
   return (
-    <div className="p-2 md:p-3">
+    <div className="p-2 md:p-3 animate-fadein">
       <Character_Detail />
     </div>
   );

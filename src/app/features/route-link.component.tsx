@@ -13,6 +13,7 @@ export interface BaseRouteLinkProps<Path extends string> {
   path: Path;
   className?: string;
   children?: ReactNode;
+  search?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }
 
@@ -26,13 +27,14 @@ function RouteLink<Props extends object = object, Path extends string = string>(
   path: outerPath,
   children,
   className,
+  search,
   replacePath,
 }: RouteLinkProps<Props, Path>) {
   const [link, path] = useMemo(() => {
     const link = pageLinkConfig[outerPath];
-    const path = replacePath ? replacePath(link.path) : link.path;
+    const path = (replacePath ? replacePath(link.path) : link.path) + (search ?? "");
     return [link, path];
-  }, [outerPath, pageLinkConfig, replacePath]);
+  }, [outerPath, pageLinkConfig, replacePath, search]);
   return (
     <Link to={path} className={className}>
       {children ?? <>{link.name}</>}

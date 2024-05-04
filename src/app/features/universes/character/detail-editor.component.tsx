@@ -7,23 +7,35 @@ import { UniverseImg } from "../img.component";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { useKeyActionEffect } from "@/common/utils/key-action.util";
 
-const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq }) => {
+const Character_Detail_Editor: FC<{ initReq: TablesInsert<"characters">; goHome: () => void }> = ({
+  initReq,
+  goHome,
+}) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [req, setReq] = useState(initReq);
   const { select } = useImageContext();
   const upsert = characterApi.mutation.useUpsert();
-  const onUpsert = useCallback(() => {
-    upsert.mutateAsync(req).then(() => {
-      setImageUrl(undefined);
-    });
-  }, [req, upsert]);
+  const onUpsert = useCallback(
+    (req: TablesInsert<"characters">) => {
+      upsert.mutateAsync(req).then(() => {
+        goHome();
+      });
+    },
+    [upsert, goHome],
+  );
+  const onCancel = useCallback(() => {
+    goHome();
+  }, [goHome]);
   useEffect(() => {
     setReq(initReq);
     setImageUrl(undefined);
   }, [initReq]);
   useKeyActionEffect({
     onCtrlS() {
-      onUpsert();
+      onUpsert(req);
+    },
+    onEscape() {
+      onCancel();
     },
   });
   return (
@@ -31,7 +43,7 @@ const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq
       className="p-2"
       onSubmit={(ev) => {
         ev.preventDefault();
-        onUpsert();
+        onUpsert(req);
       }}
     >
       {initReq.id && (
@@ -92,7 +104,16 @@ const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq
           />
         </UIFormControl>
       </div>
-      <div className="flex justify-end items-center sticky bottom-4">
+      <div className="flex justify-end items-center space-x-2 sticky bottom-4">
+        <button
+          type="button"
+          className="btn"
+          onClick={() => {
+            onCancel();
+          }}
+        >
+          キャンセル
+        </button>
         <button type="submit" className="btn btn-success">
           登録
         </button>
@@ -101,4 +122,4 @@ const Character_Editor: FC<{ initReq: TablesInsert<"characters"> }> = ({ initReq
   );
 };
 
-export default Character_Editor;
+export default Character_Detail_Editor;
