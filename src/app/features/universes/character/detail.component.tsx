@@ -1,48 +1,23 @@
-import { UILoadingBox } from "@/common/ui/loading.ui";
 import { FC } from "react";
-import { UniverseRouteNavigate } from "../../route-navigate.component";
 import Character_Detail_Editor from "./detail-editor.component";
-import { useUniverseUnion } from "../hooks";
 import { useCharacterDetailContext } from "./hooks";
-import { useSearchParams } from "react-router-dom";
 import { cn } from "@/common/utils/classname.util";
 import { OptionItem } from "@/common/type/option-item.type";
 import Character_DetailHome from "./detail-home.component";
+import { CharacterDetail_Mode } from "./context";
+import { UILoadingBox } from "@/common/ui/loading.ui";
 
-type Mode = "home" | "editing" | "relations" | "events" | "relations_editing";
-type UseModeReturns = {
-  mode: Mode;
-  onChangeMode: (mode: Mode) => void;
-};
-
-function useMode(): UseModeReturns {
-  const [params, setParams] = useSearchParams();
-  return {
-    mode: (params.get("mode") ?? "home") as Mode,
-    onChangeMode(mode) {
-      setParams((prev) => {
-        prev.set("mode", mode);
-        return prev;
-      });
-    },
-  };
-}
-
-const baseModeOpts: OptionItem<Mode>[] = [
+const baseModeOpts: OptionItem<CharacterDetail_Mode>[] = [
   { value: "home", label: "詳細" },
+  { value: "episodes", label: "エピソード" },
   { value: "events", label: "イベント" },
   { value: "relations", label: "関係性" },
 ];
 
 const Character_Detail: FC = () => {
-  const { universe } = useUniverseUnion();
-  const { character, isLoading } = useCharacterDetailContext();
-  const { mode, onChangeMode } = useMode();
-  if (isLoading) {
+  const { character, isLoading, mode, onChangeMode } = useCharacterDetailContext();
+  if (!character || isLoading) {
     return <UILoadingBox />;
-  }
-  if (!character) {
-    return <UniverseRouteNavigate path="/universes/:universe_id/characters" universe_id={universe.id} />;
   }
   if (mode == "editing") {
     return (

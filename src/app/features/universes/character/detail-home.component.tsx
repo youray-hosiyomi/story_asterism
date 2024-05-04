@@ -17,12 +17,14 @@ const Character_DetailHome: FC<{ character: TablesInsert<"characters">; startEdi
   return (
     <>
       <div className="space-y-2 py-2">
-        <div className="flex items-start space-x-5 min-h-44">
-          <UniverseImg
-            universe_id={character.universe_id}
-            image_key={character.image_key}
-            className="w-40 mt-2 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
-          />
+        <div className="flex max-md:flex-col items-start max-md:space-y-2 md:space-x-5 min-h-44">
+          <div className="max-md:mx-auto">
+            <UniverseImg
+              universe_id={character.universe_id}
+              image_key={character.image_key}
+              className="w-40 mt-2 rounded-lg bg-base-100 ring ring-base-content ring-offset-base-100 ring-offset-2"
+            />
+          </div>
           <div className="bg-base-200 min-h-40 w-full space-y-2 p-2">
             <div>
               <h3 className="text-xl font-bold">{character.name}</h3>

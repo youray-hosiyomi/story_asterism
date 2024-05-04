@@ -6,21 +6,26 @@ import { universeStorageApi } from "@/app/api/storage/universe.storage.api";
 import { UniverseImg } from "@/app/features/universes/img.component";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { useKeyActionEffect } from "@/common/utils/key-action.util";
+import { makeUUID } from "@/common/utils/uid.util";
 
 interface UniverseEditorProps {
   initReq: TablesInsert<"universes">;
+  onSave?: (id: string, req: TablesInsert<"universes">) => void;
 }
 
-const UniverseEditor: FC<UniverseEditorProps> = ({ initReq }) => {
+const UniverseEditor: FC<UniverseEditorProps> = ({ initReq, onSave }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [req, setReq] = useState(initReq);
   const { select } = useImageContext();
   const upsert = universeApi.mutation.useUpsert();
   const onUpsert = useCallback(() => {
-    upsert.mutateAsync(req).then(() => {
+    const id = req.id ?? makeUUID();
+    const upsertReq = { ...req, id };
+    upsert.mutateAsync(upsertReq).then(() => {
       setImageUrl(undefined);
+      if (onSave) onSave(id, upsertReq);
     });
-  }, [req, upsert]);
+  }, [req, upsert, onSave]);
   useKeyActionEffect({
     onCtrlS() {
       onUpsert();
