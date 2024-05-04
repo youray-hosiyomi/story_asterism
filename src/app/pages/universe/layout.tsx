@@ -46,7 +46,7 @@ const Universe_Layout: AuthPageFC = ({ auth }) => {
                 <UniverseImg
                   universe_id={universeUnion.universe.id}
                   image_key={universeUnion.universe.image_key}
-                  className="w-7 rounded-lg bg-base-100"
+                  className="w-10 rounded-lg bg-base-100"
                 />
               )}
               <h1 className="text-lg font-bold whitespace-nowrap text-ellipsis overflow-hidden">

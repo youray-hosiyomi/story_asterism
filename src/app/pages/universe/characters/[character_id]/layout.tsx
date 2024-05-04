@@ -55,7 +55,9 @@ const Universe_Characters_Detail_Layout: AuthPageFC = () => {
               },
             }}
           >
-            <Outlet />
+            <div className="p-2 md:p-3 animate-fadein">
+              <Outlet />
+            </div>
           </CharacterDetailContext.Provider>
         </div>
       </Universe_Template>

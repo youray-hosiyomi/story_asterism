@@ -34,7 +34,7 @@ const Character_Mini_VList: FC = () => {
           >
             <div className="flex min-w-0 gap-x-4 items-center">
               <UniverseImg
-                className="w-8 h-8 outline outline-1 rounded-full"
+                className="w-10 h-10 outline outline-1 rounded-full"
                 universe_id={character.universe_id}
                 image_key={character.image_key}
               />

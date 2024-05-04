@@ -16,7 +16,7 @@ export const CharacterContext = createContext<CharacterContextProps>({
   },
 });
 
-export type CharacterDetail_Mode = "home" | "editing" | "relations" | "episodes" | "events" | "relations_editing";
+export type CharacterDetail_Mode = "home" | "editing" | "relations" | "groups" | "events" | "relations_editing";
 
 interface CharacterDetailContextProps {
   character: Tables<"characters"> | null | undefined;
