@@ -4,6 +4,7 @@ CREATE TABLE
     NAME VARCHAR(25) NOT NULL,
     universe_id UUID NOT NULL,
     detail TEXT,
+    back_story TEXT,
     image_key UUID, -- 画像パス("universes") ※例: "[universeId]/[imageKey]"
     seq INTEGER,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

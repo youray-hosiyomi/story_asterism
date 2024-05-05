@@ -52,7 +52,7 @@ const Universe_Characters_Page: AuthPageFC = () => {
                     {character.name}
                   </p>
                   <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                    <LongText className="overflow-hidden text-ellipsis">{character.detail}</LongText>
+                    <LongText className="truncate line-clamp-2">{character.detail}</LongText>
                   </p>
                 </div>
               </div>

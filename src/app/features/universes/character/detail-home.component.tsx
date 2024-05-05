@@ -34,6 +34,12 @@ const Character_DetailHome: FC<{ character: TablesInsert<"characters">; startEdi
             </div>
           </div>
         </div>
+        {character.back_story && (
+          <div className="space-y-1">
+            <div className="text-lg font-semibold">生い立ち・背景</div>
+            <div className="px-2">{character.back_story}</div>
+          </div>
+        )}
       </div>
       <div className="absolute bottom-4 right-4">
         <button

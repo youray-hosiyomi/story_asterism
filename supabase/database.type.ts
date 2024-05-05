@@ -30,6 +30,7 @@ export interface Database {
     Tables: {
       characters: {
         Row: {
+          back_story: string | null;
           created_at: string | null;
           created_by: string | null;
           detail: string | null;
@@ -42,6 +43,7 @@ export interface Database {
           updated_by: string | null;
         };
         Insert: {
+          back_story?: string | null;
           created_at?: string | null;
           created_by?: string | null;
           detail?: string | null;
@@ -54,6 +56,7 @@ export interface Database {
           updated_by?: string | null;
         };
         Update: {
+          back_story?: string | null;
           created_at?: string | null;
           created_by?: string | null;
           detail?: string | null;

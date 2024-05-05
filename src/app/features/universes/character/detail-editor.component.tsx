@@ -103,6 +103,19 @@ const Character_Detail_Editor: FC<{ initReq: TablesInsert<"characters">; goHome:
             }}
           />
         </UIFormControl>
+        <UIFormControl labelText="生い立ち・背景">
+          <textarea
+            className="textarea textarea-bordered min-h-52"
+            value={req.back_story ?? ""}
+            onChange={(ev) => {
+              const back_story = ev.target.value;
+              setReq({
+                ...req,
+                back_story,
+              });
+            }}
+          />
+        </UIFormControl>
       </div>
       <div className="flex justify-end items-center space-x-2 sticky bottom-4">
         <button
