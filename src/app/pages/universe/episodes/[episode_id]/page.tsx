@@ -6,10 +6,13 @@ import { UILoadingBox } from "@/common/ui/loading.ui";
 import { useEpisodeDetailContext } from "@/app/features/universes/episode/hooks";
 import Episode_DetailHome from "@/app/features/universes/episode/detail-home.component";
 import { cn } from "@/common/utils/classname.util";
+import Episode_DetailSentence from "@/app/features/universes/episode/detail-sentence.component";
+import Episode_DetailSentenceEditor from "@/app/features/universes/episode/detail-sentence-editor.component";
 
 const baseModeOpts: OptionItem<EpisodeDetail_Mode>[] = [
   { value: "home", label: "詳細" },
   { value: "events", label: "イベント" },
+  { value: "sentence", label: "文章" },
 ];
 
 const Universe_Episodes_Detail_Page: AuthPageFC = () => {
@@ -19,6 +22,9 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
   }
   if (mode == "editing") {
     return <Episode_Detail_Editor initReq={episode} goHome={() => onChangeMode("home")} />;
+  }
+  if (mode == "sentence-editing") {
+    return <Episode_DetailSentenceEditor initReq={episode} goHome={() => onChangeMode("sentence")} />;
   }
   return (
     <div className="space-y-2">
@@ -40,6 +46,9 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
         })}
       </div>
       {mode == "home" && <Episode_DetailHome episode={episode} startEdit={() => onChangeMode("editing")} />}
+      {mode == "sentence" && (
+        <Episode_DetailSentence episode={episode} startEdit={() => onChangeMode("sentence-editing")} />
+      )}
     </div>
   );
 };

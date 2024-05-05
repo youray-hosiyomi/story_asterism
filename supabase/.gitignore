@@ -6,3 +6,5 @@
 seed.sql
 editor.sql
 *_migration_test.sql
+
+*.local
