@@ -1,10 +1,15 @@
 import LongText from "@/common/ui/long-text";
+import { useKeyActionEffect } from "@/common/utils/key-action.util";
 import { Tables } from "@supabase/database.type";
 import { PenToolIcon } from "lucide-react";
 import { FC } from "react";
 
 const Episode_DetailSentence: FC<{ episode: Tables<"episodes">; startEdit: () => void }> = ({ episode, startEdit }) => {
-  console.log(episode);
+  useKeyActionEffect({
+    onCtrlE() {
+      startEdit();
+    },
+  });
   return (
     <>
       <div>
