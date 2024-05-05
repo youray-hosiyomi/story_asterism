@@ -7,6 +7,7 @@ import { useCharacterContext } from "@/app/features/universes/character/hooks";
 import { UniverseImg } from "../img.component";
 import { UniversePageParam } from "@/app/config/page-link.config";
 import { useParams } from "react-router-dom";
+import LongText from "@/common/ui/long-text";
 
 const Character_Mini_VList: FC = () => {
   const { character_id } = useParams<UniversePageParam>();
@@ -27,7 +28,7 @@ const Character_Mini_VList: FC = () => {
       {({ data: character }) => {
         return (
           <UniverseRouteLink
-            className="px-2 py-2 sm:px-3 overflow-hidden"
+            className="px-2 py-2 sm:px-3 overflow-hidden w-full"
             path="/universes/:universe_id/characters/:character_id"
             universe_id={character.universe_id}
             character_id={character.id}
@@ -44,7 +45,7 @@ const Character_Mini_VList: FC = () => {
                   {character.name}
                 </span>
                 <span className="mt-0.5 flex text-xs leading-5 text-gray-500">
-                  <span className="relative truncate whitespace-nowrap text-ellipsis">{character.detail}</span>
+                  <LongText className="overflow-hidden text-ellipsis !whitespace-nowrap">{character.detail}</LongText>
                 </span>
               </div>
             </div>

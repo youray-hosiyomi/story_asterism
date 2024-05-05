@@ -4,18 +4,29 @@ import { episodeApi } from "@/app/api/table/universe/episode.api";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { useKeyActionEffect } from "@/common/utils/key-action.util";
 
-const Episode_Editor: FC<{ initReq: TablesInsert<"episodes"> }> = ({ initReq }) => {
+const Episode_Detail_Editor: FC<{ initReq: TablesInsert<"episodes">; goHome: () => void }> = ({ initReq, goHome }) => {
   const [req, setReq] = useState(initReq);
   const upsert = episodeApi.mutation.useUpsert();
-  const onUpsert = useCallback(() => {
-    upsert.mutateAsync(req);
-  }, [req, upsert]);
+  const onUpsert = useCallback(
+    (req: TablesInsert<"episodes">) => {
+      upsert.mutateAsync(req).then(() => {
+        goHome();
+      });
+    },
+    [upsert, goHome],
+  );
+  const onCancel = useCallback(() => {
+    goHome();
+  }, [goHome]);
   useEffect(() => {
     setReq(initReq);
   }, [initReq]);
   useKeyActionEffect({
     onCtrlS() {
-      onUpsert();
+      onUpsert(req);
+    },
+    onEscape() {
+      onCancel();
     },
   });
   return (
@@ -23,7 +34,7 @@ const Episode_Editor: FC<{ initReq: TablesInsert<"episodes"> }> = ({ initReq }) 
       className="p-2"
       onSubmit={(ev) => {
         ev.preventDefault();
-        onUpsert();
+        onUpsert(req);
       }}
     >
       <div>
@@ -108,7 +119,16 @@ const Episode_Editor: FC<{ initReq: TablesInsert<"episodes"> }> = ({ initReq }) 
           />
         </UIFormControl>
       </div>
-      <div className="flex justify-end items-center sticky bottom-4">
+      <div className="flex justify-end items-center space-x-2 sticky bottom-4">
+        <button
+          type="button"
+          className="btn"
+          onClick={() => {
+            onCancel();
+          }}
+        >
+          キャンセル
+        </button>
         <button type="submit" className="btn btn-success">
           登録
         </button>
@@ -117,4 +137,4 @@ const Episode_Editor: FC<{ initReq: TablesInsert<"episodes"> }> = ({ initReq }) 
   );
 };
 
-export default Episode_Editor;
+export default Episode_Detail_Editor;

@@ -16,14 +16,22 @@ export const EpisodeContext = createContext<EpisodeContextProps>({
   },
 });
 
+export type EpisodeDetail_Mode = "home" | "editing" | "events" | "sentence";
+
 interface EpisodeDetailContextProps {
   episode: Tables<"episodes"> | null | undefined;
   isLoading: boolean;
   refetch: () => void;
+  mode: EpisodeDetail_Mode;
+  onChangeMode: (mode: EpisodeDetail_Mode) => void;
 }
 
 export const EpisodeDetailContext = createContext<EpisodeDetailContextProps>({
   episode: null,
   isLoading: false,
   refetch() {},
+  mode: "home",
+  onChangeMode(mode) {
+    mode;
+  },
 });
