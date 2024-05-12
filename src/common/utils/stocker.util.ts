@@ -45,6 +45,11 @@ export class SingleStocker<Data> {
   get(key: string): Data | null {
     return this.record[key] ?? null;
   }
+  getUnsafe(key: string): Data {
+    const data = this.get(key);
+    if (!data) throw new Error("data is null");
+    return data;
+  }
   getAll(): Data[] {
     return Object.keys(this.record).reduce((prev: Data[], key) => {
       const data = this.get(key);

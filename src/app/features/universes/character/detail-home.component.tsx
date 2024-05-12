@@ -3,7 +3,7 @@ import { TablesInsert } from "@supabase/database.type";
 import { PenToolIcon } from "lucide-react";
 import { FC } from "react";
 import { UniverseImg } from "../img.component";
-import LongText from "@/common/ui/long-text";
+import UILongText from "@/common/ui/long-text";
 
 const Character_DetailHome: FC<{ character: TablesInsert<"characters">; startEdit: () => void }> = ({
   character,
@@ -30,7 +30,7 @@ const Character_DetailHome: FC<{ character: TablesInsert<"characters">; startEdi
               <h3 className="text-xl font-bold">{character.name}</h3>
             </div>
             <div>
-              <LongText className="text-sm">{character.detail}</LongText>
+              <UILongText className="text-sm">{character.detail}</UILongText>
             </div>
           </div>
         </div>

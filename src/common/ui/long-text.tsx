@@ -1,10 +1,10 @@
 import { DetailedHTMLProps, FC } from "react";
 import { cn } from "../utils/classname.util";
 
-interface LongTextProps extends DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface UILongTextProps extends DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
-const LongText: FC<LongTextProps> = ({ ...props }) => {
+const UILongText: FC<UILongTextProps> = ({ ...props }) => {
   return <div {...props} className={cn(props.className, "whitespace-pre-wrap break-words break-all text-wrap")} />;
 };
 
-export default LongText;
+export default UILongText;

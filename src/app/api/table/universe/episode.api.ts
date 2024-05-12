@@ -3,6 +3,7 @@ import { supabase } from "@supabase/client";
 import { TablesInsert } from "@supabase/database.type";
 
 export type Episode_SearchParams = {
+  ids?: string[];
   universe_id: string;
 };
 
@@ -15,6 +16,9 @@ class EpisodeApi extends ApiHandler<"episodes", "id" | "universe_id", Episode_Se
       handlers: [
         (prev, params) => {
           prev.eq("universe_id", params.universe_id);
+          if (params.ids) {
+            prev.in("id", params.ids);
+          }
           return prev.order("seq", { ascending: true });
         },
       ],

@@ -12,7 +12,14 @@ import {
 } from "react";
 import { cn } from "../utils/classname.util";
 
-interface UIDialogProps extends DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement> {
+export type UIDialogClassName = {
+  dialog?: string;
+  modalBox?: string;
+};
+
+interface UIDialogProps
+  extends Omit<DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>, "className"> {
+  className?: UIDialogClassName;
   isOpen?: boolean;
   onChangeIsOpen?: (currentIsOpen: boolean) => void;
 }
@@ -67,13 +74,13 @@ const UIDialog = forwardRef<UIDialogHandler, UIDialogProps>(
         <dialog
           {...props}
           ref={dialogRef}
-          className={cn("modal", className)}
+          className={cn("modal", className?.dialog)}
           onClose={(ev) => {
             ev.stopPropagation();
             onChangeIsOpen && onChangeIsOpen(false);
           }}
         >
-          <div className="modal-box">{children}</div>
+          <div className={cn("modal-box", className?.modalBox)}>{children}</div>
           <form method="dialog" className="modal-backdrop">
             <button>close</button>
           </form>

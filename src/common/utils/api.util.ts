@@ -116,8 +116,10 @@ export interface MutationApiProps<Model, PrimaryParams> {
   key: string;
   /** 新規作成 */
   insert?: MutationApiInsert<Model>;
+  insertMulti?: MutationApiInsert<Model[]>;
   /** 新規作成(存在する場合は更新) */
   upsert?: MutationApiUpsert<Model>;
+  upsertMulti?: MutationApiUpsert<Model[]>;
   /** 更新 */
   update?: MutationApiUpdate<Model, PrimaryParams>;
   /** 削除 */
@@ -151,13 +153,17 @@ export function useM<P, R = void>(key: string, fn: MutationApiFn<P, R>, params?:
 export class MutationApi<Model, PrimaryParams> {
   public key: string;
   private insertFn?: MutationApiInsert<Model>;
+  private insertMultiFn?: MutationApiInsert<Model[]>;
   private upsertFn?: MutationApiUpsert<Model>;
+  private upsertMultiFn?: MutationApiUpsert<Model[]>;
   private updateFn?: MutationApiUpdate<Model, PrimaryParams>;
   private deleteFn?: MutationApiDelete<PrimaryParams>;
   constructor(props: MutationApiProps<Model, PrimaryParams>) {
     this.key = props.key;
     this.insertFn = props.insert;
+    this.insertMultiFn = props.insertMulti;
     this.upsertFn = props.upsert;
+    this.upsertMultiFn = props.upsertMulti;
     this.updateFn = props.update;
     this.deleteFn = props.delete;
   }
@@ -167,9 +173,21 @@ export class MutationApi<Model, PrimaryParams> {
     await this.insertFn(req);
   }
 
+  public async insertMulti(reqs: Model[]): Promise<void> {
+    if (this.insertMultiFn) await this.insertMultiFn(reqs);
+    const inserts = reqs?.map((req) => this.insert(req)) ?? [];
+    await Promise.all(inserts);
+  }
+
   public async upsert(req: Model): Promise<void> {
     if (!this.upsertFn) throw Error("upsert method is undefined");
     await this.upsertFn(req);
+  }
+
+  public async upsertMulti(reqs: Model[]): Promise<void> {
+    if (this.upsertMultiFn) await this.upsertMultiFn(reqs);
+    const upserts = reqs?.map((req) => this.upsert(req)) ?? [];
+    await Promise.all(upserts);
   }
 
   public async update({ params, req }: MutationApiUpdateParams<Model, PrimaryParams>): Promise<void> {
@@ -323,8 +341,22 @@ export abstract class ApiHandler<
     }
   }
 
+  async insertMulti(reqs: Insert<TableName>[]) {
+    const res = await this.db().insert(reqs as any);
+    if (res.error) {
+      throw res.error;
+    }
+  }
+
   async upsert(req: Insert<TableName>) {
     const res = await this.db().upsert(req as any);
+    if (res.error) {
+      throw res.error;
+    }
+  }
+
+  async upsertMulti(reqs: Insert<TableName>[]) {
+    const res = await this.db().upsert(reqs as any);
     if (res.error) {
       throw res.error;
     }

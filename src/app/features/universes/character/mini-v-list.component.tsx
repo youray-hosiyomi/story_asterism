@@ -7,7 +7,7 @@ import { useCharacterContext } from "@/app/features/universes/character/hooks";
 import { UniverseImg } from "../img.component";
 import { UniversePageParam } from "@/app/config/page-link.config";
 import { useParams } from "react-router-dom";
-import LongText from "@/common/ui/long-text";
+import UILongText from "@/common/ui/long-text";
 
 const Character_Mini_VList: FC = () => {
   const { character_id } = useParams<UniversePageParam>();
@@ -45,7 +45,9 @@ const Character_Mini_VList: FC = () => {
                   {character.name}
                 </span>
                 <span className="mt-0.5 flex text-xs leading-5 text-gray-500">
-                  <LongText className="overflow-hidden text-ellipsis !whitespace-nowrap">{character.detail}</LongText>
+                  <UILongText className="overflow-hidden text-ellipsis !whitespace-nowrap">
+                    {character.detail}
+                  </UILongText>
                 </span>
               </div>
             </div>

@@ -16,7 +16,7 @@ export const EpisodeContext = createContext<EpisodeContextProps>({
   },
 });
 
-export type EpisodeDetail_Mode = "home" | "editing" | "events" | "sentence" | "sentence-editing";
+export type EpisodeDetail_Mode = "home" | "editing" | "scenes" | "sentence" | "sentence-editing" | "scenes-editing";
 
 interface EpisodeDetailContextProps {
   episode: Tables<"episodes"> | null | undefined;

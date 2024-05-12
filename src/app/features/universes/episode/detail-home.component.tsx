@@ -1,8 +1,8 @@
 import { useKeyActionEffect } from "@/common/utils/key-action.util";
-import { TablesInsert } from "@supabase/database.type";
+import { Tables } from "@supabase/database.type";
 import { PenToolIcon } from "lucide-react";
 import { FC, useMemo } from "react";
-import LongText from "@/common/ui/long-text";
+import UILongText from "@/common/ui/long-text";
 import UITimeline from "@/common/ui/timeline.ui";
 
 type EpisodeTimeLineItem = {
@@ -10,10 +10,7 @@ type EpisodeTimeLineItem = {
   text?: string | null;
 };
 
-const Episode_DetailHome: FC<{ episode: TablesInsert<"episodes">; startEdit: () => void }> = ({
-  episode,
-  startEdit,
-}) => {
+const Episode_DetailHome: FC<{ episode: Tables<"episodes">; startEdit: () => void }> = ({ episode, startEdit }) => {
   useKeyActionEffect({
     onCtrlE() {
       startEdit();
@@ -48,7 +45,7 @@ const Episode_DetailHome: FC<{ episode: TablesInsert<"episodes">; startEdit: () 
               <h3 className="text-xl font-bold">{episode.title}</h3>
             </div>
             <div>
-              <LongText className="text-sm">{episode.summary}</LongText>
+              <UILongText className="text-sm">{episode.summary}</UILongText>
             </div>
           </div>
         </div>
@@ -58,7 +55,7 @@ const Episode_DetailHome: FC<{ episode: TablesInsert<"episodes">; startEdit: () 
               start: <div className="font-semibold">{item.title}</div>,
               end: item.text && (
                 <div className="space-y-3">
-                  <LongText>{item.text}</LongText>
+                  <UILongText>{item.text}</UILongText>
                 </div>
               ),
             };

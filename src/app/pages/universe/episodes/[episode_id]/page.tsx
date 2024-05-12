@@ -11,7 +11,7 @@ import Episode_DetailSentenceEditor from "@/app/features/universes/episode/detai
 
 const baseModeOpts: OptionItem<EpisodeDetail_Mode>[] = [
   { value: "home", label: "詳細" },
-  { value: "events", label: "イベント" },
+  { value: "scenes", label: "シーン" },
   { value: "sentence", label: "文章" },
 ];
 
@@ -25,6 +25,9 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
   }
   if (mode == "sentence-editing") {
     return <Episode_DetailSentenceEditor initReq={episode} goHome={() => onChangeMode("sentence")} />;
+  }
+  if (mode == "scenes-editing") {
+    return <></>;
   }
   return (
     <div className="space-y-2">
@@ -49,6 +52,7 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
       {mode == "sentence" && (
         <Episode_DetailSentence episode={episode} startEdit={() => onChangeMode("sentence-editing")} />
       )}
+      {mode == "scenes" && <></>}
     </div>
   );
 };

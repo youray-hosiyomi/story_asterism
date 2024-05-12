@@ -6,23 +6,16 @@ import UIList from "@/common/ui/list.ui";
 import { Tables } from "@supabase/database.type";
 import DataNotFound from "@/app/features/data-not-found.component";
 import { PlusIcon } from "lucide-react";
-import { useConfirm } from "@/common/ui/confirm.ui";
-import Episode_MiniEditor from "@/app/features/universes/episode/mini-editor.component";
 import { UniverseRouteLink } from "@/app/features/route-link.component";
-import LongText from "@/common/ui/long-text";
+import UILongText from "@/common/ui/long-text";
+import { useEpisodeContext } from "@/app/features/universes/episode/hooks";
 
 const Universe_Episodes_Page: AuthPageFC = () => {
   const { universe } = useUniverseUnion();
+  const { openMiniEditor } = useEpisodeContext();
   const { data: episodes, isLoading } = episodeApi.query.useList({ universe_id: universe.id });
-  const { confirm } = useConfirm();
   const addEpisode = () => {
-    confirm({
-      RenderContent: (props) => {
-        return (
-          <Episode_MiniEditor initReq={episodeApi.emptyReq(universe.id)} onSave={props.ok} onCancel={props.cancel} />
-        );
-      },
-    });
+    openMiniEditor();
   };
   return (
     <Universe_Template
@@ -56,9 +49,9 @@ const Universe_Episodes_Page: AuthPageFC = () => {
                     <span className="absolute inset-x-0 -top-px bottom-0" />
                     {episode.title}
                   </p>
-                  <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                    <LongText className="truncate line-clamp-2">{episode.summary}</LongText>
-                  </p>
+                  <div className="mt-1 flex text-xs leading-5 text-gray-500">
+                    <UILongText className="truncate line-clamp-2">{episode.summary}</UILongText>
+                  </div>
                 </div>
               </div>
             </UniverseRouteLink>

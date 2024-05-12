@@ -28,6 +28,75 @@ export interface Database {
   };
   public: {
     Tables: {
+      "character&event$relations": {
+        Row: {
+          character_id: string;
+          created_at: string | null;
+          created_by: string | null;
+          detail: string | null;
+          event_id: string;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          character_id: string;
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          event_id: string;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          character_id?: string;
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          event_id?: string;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "character&event$relations_character_id_universe_id_fkey";
+            columns: ["character_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "characters";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "character&event$relations_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "character&event$relations_event_id_universe_id_fkey";
+            columns: ["event_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "character&event$relations_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "character&event$relations_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       characters: {
         Row: {
           back_story: string | null;
@@ -165,6 +234,147 @@ export interface Database {
           },
         ];
       };
+      events: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          date: number;
+          detail: string | null;
+          hour: number;
+          id: string;
+          minute: number;
+          month: number;
+          name: string;
+          period_id: string;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+          year: number;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          date?: number;
+          detail?: string | null;
+          hour?: number;
+          id?: string;
+          minute?: number;
+          month?: number;
+          name: string;
+          period_id: string;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+          year?: number;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          date?: number;
+          detail?: string | null;
+          hour?: number;
+          id?: string;
+          minute?: number;
+          month?: number;
+          name?: string;
+          period_id?: string;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+          year?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "events_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "events_period_id_universe_id_fkey";
+            columns: ["period_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "periods";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "events_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "events_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      periods: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          detail: string | null;
+          id: string;
+          is_real: boolean | null;
+          name: string;
+          seq: number | null;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          is_real?: boolean | null;
+          name: string;
+          seq?: number | null;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          id?: string;
+          is_real?: boolean | null;
+          name?: string;
+          seq?: number | null;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "periods_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "periods_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "periods_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       profiles: {
         Row: {
           avatar_key: string | null;
@@ -192,6 +402,81 @@ export interface Database {
             foreignKeyName: "profiles_uid_fkey";
             columns: ["uid"];
             isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      scenes: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          detail: string | null;
+          episode_id: string;
+          event_id: string;
+          id: string;
+          seq: number | null;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          episode_id: string;
+          event_id: string;
+          id?: string;
+          seq?: number | null;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          detail?: string | null;
+          episode_id?: string;
+          event_id?: string;
+          id?: string;
+          seq?: number | null;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "scenes_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "scenes_episode_id_universe_id_fkey";
+            columns: ["episode_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "episodes";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "scenes_event_id_universe_id_fkey";
+            columns: ["event_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "scenes_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "scenes_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
@@ -274,6 +559,20 @@ export interface Database {
         Returns: boolean;
       };
       exist_episode_by_seq: {
+        Args: {
+          universe_id: string;
+          seq: number;
+        };
+        Returns: boolean;
+      };
+      exist_period_by_seq: {
+        Args: {
+          universe_id: string;
+          seq: number;
+        };
+        Returns: boolean;
+      };
+      exist_scene_by_seq: {
         Args: {
           universe_id: string;
           seq: number;
@@ -400,6 +699,101 @@ export interface Database {
           },
         ];
       };
+      s3_multipart_uploads: {
+        Row: {
+          bucket_id: string;
+          created_at: string;
+          id: string;
+          in_progress_size: number;
+          key: string;
+          owner_id: string | null;
+          upload_signature: string;
+          version: string;
+        };
+        Insert: {
+          bucket_id: string;
+          created_at?: string;
+          id: string;
+          in_progress_size?: number;
+          key: string;
+          owner_id?: string | null;
+          upload_signature: string;
+          version: string;
+        };
+        Update: {
+          bucket_id?: string;
+          created_at?: string;
+          id?: string;
+          in_progress_size?: number;
+          key?: string;
+          owner_id?: string | null;
+          upload_signature?: string;
+          version?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "s3_multipart_uploads_bucket_id_fkey";
+            columns: ["bucket_id"];
+            isOneToOne: false;
+            referencedRelation: "buckets";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      s3_multipart_uploads_parts: {
+        Row: {
+          bucket_id: string;
+          created_at: string;
+          etag: string;
+          id: string;
+          key: string;
+          owner_id: string | null;
+          part_number: number;
+          size: number;
+          upload_id: string;
+          version: string;
+        };
+        Insert: {
+          bucket_id: string;
+          created_at?: string;
+          etag: string;
+          id?: string;
+          key: string;
+          owner_id?: string | null;
+          part_number: number;
+          size?: number;
+          upload_id: string;
+          version: string;
+        };
+        Update: {
+          bucket_id?: string;
+          created_at?: string;
+          etag?: string;
+          id?: string;
+          key?: string;
+          owner_id?: string | null;
+          part_number?: number;
+          size?: number;
+          upload_id?: string;
+          version?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "s3_multipart_uploads_parts_bucket_id_fkey";
+            columns: ["bucket_id"];
+            isOneToOne: false;
+            referencedRelation: "buckets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "s3_multipart_uploads_parts_upload_id_fkey";
+            columns: ["upload_id"];
+            isOneToOne: false;
+            referencedRelation: "s3_multipart_uploads";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -437,6 +831,37 @@ export interface Database {
         Returns: {
           size: number;
           bucket_id: string;
+        }[];
+      };
+      list_multipart_uploads_with_delimiter: {
+        Args: {
+          bucket_id: string;
+          prefix_param: string;
+          delimiter_param: string;
+          max_keys?: number;
+          next_key_token?: string;
+          next_upload_token?: string;
+        };
+        Returns: {
+          key: string;
+          id: string;
+          created_at: string;
+        }[];
+      };
+      list_objects_with_delimiter: {
+        Args: {
+          bucket_id: string;
+          prefix_param: string;
+          delimiter_param: string;
+          max_keys?: number;
+          start_after?: string;
+          next_token?: string;
+        };
+        Returns: {
+          name: string;
+          id: string;
+          metadata: Json;
+          updated_at: string;
         }[];
       };
       search: {

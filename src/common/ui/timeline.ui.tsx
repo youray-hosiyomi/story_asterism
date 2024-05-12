@@ -12,15 +12,16 @@ export type UITimelineItem = {
 
 interface UITimelineProps extends DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
   items: UITimelineItem[];
+  dispEdge?: boolean;
 }
 
-const UITimeline: FC<UITimelineProps> = ({ items }) => {
+const UITimeline: FC<UITimelineProps> = ({ items, dispEdge, ...props }) => {
   return (
-    <ul className={cn("timeline timeline-vertical timeline-compact")}>
+    <ul {...props} className={cn("timeline timeline-vertical timeline-compact", props.className)}>
       {items.map((item, i) => {
         return (
           <li key={i}>
-            {i !== 0 && <hr className={item.isPrimary ? "bg-primary" : ""} />}
+            {(dispEdge || i !== 0) && <hr className={item.isPrimary ? "bg-primary" : ""} />}
             {item.start && <div className="timeline-start">{item.start}</div>}
             <div className={cn("timeline-middle", item.isPrimary ? "text-primary" : "")}>
               {(!item.middle || item.middle == "base") && <div className="w-3 h-3 rounded-full bg-base-content" />}
@@ -35,7 +36,7 @@ const UITimeline: FC<UITimelineProps> = ({ items }) => {
               )}
             </div>
             {item.end && <div className="timeline-end timeline-box">{item.end}</div>}
-            {i !== items.length - 1 && <hr className={item.isPrimary ? "bg-primary" : ""} />}
+            {(dispEdge || i !== items.length - 1) && <hr className={item.isPrimary ? "bg-primary" : ""} />}
           </li>
         );
       })}

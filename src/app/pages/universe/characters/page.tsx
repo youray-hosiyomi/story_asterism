@@ -7,7 +7,7 @@ import { PlusIcon } from "lucide-react";
 import { useCharacterContext } from "@/app/features/universes/character/hooks";
 import { UniverseRouteLink } from "@/app/features/route-link.component";
 import { UniverseImg } from "@/app/features/universes/img.component";
-import LongText from "@/common/ui/long-text";
+import UILongText from "@/common/ui/long-text";
 
 const Universe_Characters_Page: AuthPageFC = () => {
   const { characters, isLoading, openMiniEditor } = useCharacterContext();
@@ -51,9 +51,9 @@ const Universe_Characters_Page: AuthPageFC = () => {
                     <span className="absolute inset-x-0 -top-px bottom-0" />
                     {character.name}
                   </p>
-                  <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                    <LongText className="truncate line-clamp-2">{character.detail}</LongText>
-                  </p>
+                  <div className="mt-1 flex text-xs leading-5 text-gray-500">
+                    <UILongText className="truncate line-clamp-2">{character.detail}</UILongText>
+                  </div>
                 </div>
               </div>
             </UniverseRouteLink>

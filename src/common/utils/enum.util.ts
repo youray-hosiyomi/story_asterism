@@ -7,11 +7,13 @@ export type EnumHandlerConfig<Kind> = {
 };
 
 export class EnumHandler<Kind extends string> {
+  values: Kind[];
   options: OptionItem<Kind>[];
   kindRecord: Record<string, Kind>;
   defaultKind: Kind;
   constructor(c: EnumHandlerConfig<Kind>) {
     this.options = c.options;
+    this.values = c.options.map((o) => o.value);
     this.kindRecord = singleStock<Kind>((s) => s)
       .setAll(c.options.map((o) => o.value))
       .getRecord();

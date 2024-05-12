@@ -2,15 +2,15 @@ import { ApiHandler } from "@/common/utils/api.util";
 import { supabase } from "@supabase/client";
 import { TablesInsert } from "@supabase/database.type";
 
-export type Character_SearchParams = {
-  ids?: string[];
+export type Period_SearchParams = {
   universe_id: string;
+  ids?: string[];
 };
 
-class CharacterApi extends ApiHandler<"characters", "id" | "universe_id", Character_SearchParams> {
+class PeriodApi extends ApiHandler<"periods", "id" | "universe_id", Period_SearchParams> {
   constructor() {
     super(supabase, {
-      tableName: "characters",
+      tableName: "periods",
       primaryKeys: ["id", "universe_id"],
       uniqueKeys: ["id", "universe_id"],
       handlers: [
@@ -24,12 +24,12 @@ class CharacterApi extends ApiHandler<"characters", "id" | "universe_id", Charac
       ],
     });
   }
-  emptyReq(universe_id: string): TablesInsert<"characters"> {
+  emptyReq(universe_id: string): TablesInsert<"periods"> {
     return {
       name: "",
-      universe_id: universe_id,
+      universe_id,
     };
   }
 }
 
-export const characterApi: CharacterApi = new CharacterApi();
+export const periodApi: PeriodApi = new PeriodApi();

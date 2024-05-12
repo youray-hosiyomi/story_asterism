@@ -14,7 +14,7 @@ export type UIListSelectConfig<Data> = {
 type UIListProps<Data> = {
   list?: Data[] | null;
   className?: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   children: FC<UIListNodeRenderProps<Data>>;
   emptyContent?: ReactNode;
   selectConfig?: UIListSelectConfig<Data>;

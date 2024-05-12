@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { FC, ReactNode, createContext, useContext, useState } from "react";
-import UIDialog from "./dialog.ui";
+import { FC, ReactNode, createContext, useCallback, useContext, useState } from "react";
+import UIDialog, { UIDialogClassName } from "./dialog.ui";
 import { ThemeColor } from "../utils/color.util";
 import { BellIcon } from "lucide-react";
 import { cn } from "../utils/classname.util";
@@ -13,6 +13,7 @@ export type UIConfirm_RenderContentProps = {
 };
 
 export type UIConfirm_FuncProps = {
+  className?: UIDialogClassName;
   RenderContent: FC<UIConfirm_RenderContentProps>;
   onOk?: () => void;
   onCancel?: () => void;
@@ -95,10 +96,10 @@ const UIConfirmDialogList: FC<UIConfirmDialogNodeProps> = ({
 
 export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) => {
   const [propsList, setPropsList] = useState<UIConfirm_FuncProps[]>([]);
-  function confirm(p: UIConfirm_FuncProps) {
+  const confirm = useCallback((p: UIConfirm_FuncProps) => {
     setPropsList((prev) => prev.concat(p));
-  }
-  function baseConfirm({ onOk, onCancel, ...baseProps }: UIConfirm_BaseFuncProps) {
+  }, []);
+  const baseConfirm = useCallback(({ onOk, onCancel, ...baseProps }: UIConfirm_BaseFuncProps) => {
     setPropsList((prev) =>
       prev.concat({
         RenderContent: makeBaseRenderContent(baseProps),
@@ -106,7 +107,7 @@ export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) =>
         onCancel,
       }),
     );
-  }
+  }, []);
   return (
     <>
       <UIConfirm_Context.Provider
