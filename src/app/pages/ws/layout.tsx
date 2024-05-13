@@ -7,6 +7,7 @@ import { wsPageLinkConfig, wsPageLinkMaps } from "@/app/config/page-link.config"
 import { cn } from "@/common/utils/classname.util";
 import AppTitle from "@/app/features/app-title.component";
 import BaseLayout from "@/app/features/base-layout.component";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@shadcn/components/ui/tooltip";
 
 const linkMaps = wsPageLinkMaps;
 
@@ -41,24 +42,31 @@ const WS_Layout: AuthPageFC = ({ auth }) => {
                   const isActive: boolean = l.path == location.pathname;
                   const isSubActive: boolean = l.childPathes.indexOf(location.pathname) !== -1;
                   return (
-                    <li key={l.path} title={l.name} className="" data-tip={l.name}>
-                      <Link
-                        to={l.path}
-                        className={cn(
-                          "lg:px-0 lg:py-2 lg:items-center lg:justify-center",
-                          isActive || isSubActive ? "active" : null,
-                        )}
-                        onClick={(ev) => {
-                          ev;
-                          if (handlerRef.current?.drawerCheckRef.current) {
-                            handlerRef.current.drawerCheckRef.current.checked = false;
-                          }
-                        }}
-                      >
-                        {l.icon && <l.icon className="w-5 h-5" />}
-                        <span className="lg:hidden">{l.name}</span>
-                      </Link>
-                    </li>
+                    <Tooltip key={l.path}>
+                      <TooltipTrigger>
+                        <li title={l.name} className="" data-tip={l.name}>
+                          <Link
+                            to={l.path}
+                            className={cn(
+                              "lg:px-0 lg:py-2 lg:items-center lg:justify-center",
+                              isActive || isSubActive ? "active" : null,
+                            )}
+                            onClick={(ev) => {
+                              ev;
+                              if (handlerRef.current?.drawerCheckRef.current) {
+                                handlerRef.current.drawerCheckRef.current.checked = false;
+                              }
+                            }}
+                          >
+                            {l.icon && <l.icon className="w-5 h-5" />}
+                            <span className="lg:hidden">{l.name}</span>
+                          </Link>
+                        </li>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-lg:hidden" side="right">
+                        <p className="text-red">{l.name}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   );
                 })}
               </ul>

@@ -4,6 +4,7 @@ import AuthProvider, { AuthProviderHandler } from "./app/features/auth/provider"
 import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PostgrestError } from "@supabase/supabase-js";
 import { ToastContainer } from "react-toastify";
+import { TooltipProvider } from "@shadcn/components/ui/tooltip";
 
 const App: FC = () => {
   const authProviderHandler = useRef<AuthProviderHandler>(null);
@@ -30,7 +31,9 @@ const App: FC = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <AuthProvider ref={authProviderHandler}>
-          <Router />
+          <TooltipProvider delayDuration={0}>
+            <Router />
+          </TooltipProvider>
         </AuthProvider>
       </QueryClientProvider>
       <ToastContainer

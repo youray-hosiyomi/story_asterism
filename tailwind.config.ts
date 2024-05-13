@@ -1,16 +1,20 @@
 import { Config } from "tailwindcss";
 import daisyui, { Config as DaisyUIConfig } from "daisyui";
+import shadcnConfig from "./shadcn/tailwind.config";
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}", "./shadcn/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    container: shadcnConfig.theme.container,
     extend: {
+      ...shadcnConfig.theme.extend,
       animation: {
+        ...shadcnConfig.theme.extend.animation,
         "fadein-up": "fadein-up 0.2s ease-out forwards",
         fadein: "fadein 0.2s ease-out forwards",
       },
-      zIndex: {},
       keyframes: {
+        ...shadcnConfig.theme.extend.keyframes,
         "fadein-up": {
           "0%": {
             opacity: "0",
@@ -32,9 +36,9 @@ export default {
       },
     },
   },
-  plugins: [daisyui],
+  plugins: [daisyui, ...shadcnConfig.plugins],
   daisyui: {
-    themes: ["light", "dark", "winter", "lemonade", "nord", "cupcake"],
+    themes: ["light"],
   },
 } as Config & {
   daisyui?: DaisyUIConfig;

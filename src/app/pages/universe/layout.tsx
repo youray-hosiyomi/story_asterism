@@ -12,6 +12,7 @@ import { UniverseContext } from "@/app/features/universes/context";
 import { LogOutIcon } from "lucide-react";
 import { UniverseRouteLink, WSRouteLink } from "@/app/features/route-link.component";
 import { UniverseImg } from "@/app/features/universes/img.component";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@shadcn/components/ui/tooltip";
 
 const linkMaps = universePageLinkMaps;
 
@@ -69,24 +70,31 @@ const Universe_Layout: AuthPageFC = ({ auth }) => {
                     const path = generatePath(l.path, params);
                     const isActive: boolean = path == location.pathname;
                     return (
-                      <li key={path} title={l.name} className="" data-tip={l.name}>
-                        <Link
-                          to={path}
-                          className={cn(
-                            "lg:px-0 lg:py-2 lg:items-center lg:justify-center",
-                            isActive ? "active" : null,
-                          )}
-                          onClick={(ev) => {
-                            ev;
-                            if (handlerRef.current?.drawerCheckRef.current) {
-                              handlerRef.current.drawerCheckRef.current.checked = false;
-                            }
-                          }}
-                        >
-                          {l.icon && <l.icon className="w-5 h-5" />}
-                          <span className="lg:hidden">{l.name}</span>
-                        </Link>
-                      </li>
+                      <Tooltip key={path}>
+                        <TooltipTrigger>
+                          <li title={l.name} className="" data-tip={l.name}>
+                            <Link
+                              to={path}
+                              className={cn(
+                                "lg:px-0 lg:py-2 lg:items-center lg:justify-center",
+                                isActive ? "active" : null,
+                              )}
+                              onClick={(ev) => {
+                                ev;
+                                if (handlerRef.current?.drawerCheckRef.current) {
+                                  handlerRef.current.drawerCheckRef.current.checked = false;
+                                }
+                              }}
+                            >
+                              {l.icon && <l.icon className="w-5 h-5" />}
+                              <span className="lg:hidden">{l.name}</span>
+                            </Link>
+                          </li>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-lg:hidden" side="right">
+                          <p className="text-red">{l.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
                     );
                   })}
                 </ul>
