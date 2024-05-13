@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 export type UITimelineItem_MiddleType = "base" | "check";
 

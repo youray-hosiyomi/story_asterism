@@ -5,7 +5,7 @@ import Episode_Detail_Editor from "@/app/features/universes/episode/detail-edito
 import { UILoadingBox } from "@/common/ui/loading.ui";
 import { useEpisodeDetailContext } from "@/app/features/universes/episode/hooks";
 import Episode_DetailHome from "@/app/features/universes/episode/detail-home.component";
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import Episode_DetailSentence from "@/app/features/universes/episode/detail-sentence.component";
 import Episode_DetailSentenceEditor from "@/app/features/universes/episode/detail-sentence-editor.component";
 

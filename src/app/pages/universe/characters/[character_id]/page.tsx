@@ -5,7 +5,7 @@ import Character_Detail_Editor from "@/app/features/universes/character/detail-e
 import { UILoadingBox } from "@/common/ui/loading.ui";
 import { useCharacterDetailContext } from "@/app/features/universes/character/hooks";
 import Character_DetailHome from "@/app/features/universes/character/detail-home.component";
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 const baseModeOpts: OptionItem<CharacterDetail_Mode>[] = [
   { value: "home", label: "詳細" },

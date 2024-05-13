@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC, InputHTMLAttributes, useEffect, useRef } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 interface UICheckboxProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   indeterminate?: boolean;

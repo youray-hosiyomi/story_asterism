@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 interface UILongTextProps extends DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 

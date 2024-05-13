@@ -1,4 +1,4 @@
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 
 interface AppTitleProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}

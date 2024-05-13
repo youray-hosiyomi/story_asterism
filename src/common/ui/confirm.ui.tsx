@@ -3,7 +3,7 @@ import { FC, ReactNode, createContext, useCallback, useContext, useState } from 
 import UIDialog, { UIDialogClassName } from "./dialog.ui";
 import { ThemeColor } from "../utils/color.util";
 import { BellIcon } from "lucide-react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 export type UIConfirm_RenderContentProps = {
   confirm: (props: UIConfirm_FuncProps) => void;

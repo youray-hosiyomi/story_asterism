@@ -8,7 +8,7 @@ import { makeUUID } from "@/common/utils/uid.util";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { UILoadingArea } from "@/common/ui/loading.ui";
 import UserAvatar from "../user/avatar.component";
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import { StorageImage } from "@/common/utils/api.util";
 
 type ImageCropParams = {

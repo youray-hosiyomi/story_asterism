@@ -1,6 +1,6 @@
 import { LucideIcon, MoreVerticalIcon } from "lucide-react";
 import { FC, MouseEventHandler, ReactNode } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import { Link } from "react-router-dom";
 
 export type UIDropdownItem = {

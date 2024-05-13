@@ -1,4 +1,4 @@
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import {
   ReactNode,
   CSSProperties,

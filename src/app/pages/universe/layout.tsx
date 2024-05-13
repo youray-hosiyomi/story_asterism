@@ -4,7 +4,7 @@ import { AuthPageFC } from "@/common/type/page.type";
 import AuthUserButton from "@/app/features/auth/_components/user-button.component";
 import { useMemo, useRef } from "react";
 import { UniversePageParam, universePageLinkMaps, wsPageLinkConfig } from "@/app/config/page-link.config";
-import { cn } from "@/common/utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import BaseLayout from "@/app/features/base-layout.component";
 import { useGetUniverseUnion } from "@/app/features/universes/hooks";
 import { UILoadingBox } from "@/common/ui/loading.ui";

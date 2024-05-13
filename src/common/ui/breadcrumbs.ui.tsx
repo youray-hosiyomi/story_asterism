@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { FC, ReactNode } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import { Link } from "react-router-dom";
 
 export type UIBreadcrumbItem = {

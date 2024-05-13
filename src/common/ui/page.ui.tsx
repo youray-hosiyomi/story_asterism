@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 export interface UIPageProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   header?: ReactNode;

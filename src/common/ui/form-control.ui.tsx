@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, FC, LabelHTMLAttributes } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 interface UIFormControlProps extends DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement> {
   labelText?: string;

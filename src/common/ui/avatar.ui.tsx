@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes, ReactNode } from "react";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 import { UILoading } from "./loading.ui";
 import { useQ } from "../utils/api.util";
 

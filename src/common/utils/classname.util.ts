@@ -1,7 +1,3 @@
-export function cn(...classNames: (string | undefined | null)[]) {
-  return classNames.filter((c) => !!c).join(" ");
-}
-
 export type CNObject = Record<string, boolean>;
 
 export function cnByObject(obj: CNObject) {

@@ -1,6 +1,6 @@
 import { CSSProperties, FC, ReactNode } from "react";
 import { UILoadingArea } from "./loading.ui";
-import { cn } from "../utils/classname.util";
+import { cn } from "@shadcn/lib/utils";
 
 export type UIListNodeRenderProps<Data> = {
   data: Data;
