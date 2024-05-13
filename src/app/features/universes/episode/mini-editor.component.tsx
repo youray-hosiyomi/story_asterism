@@ -48,10 +48,10 @@ const Episode_MiniEditor: FC<{
               onCancel();
             }}
           >
-            Cancel
+            キャンセル
           </button>
           <button type="submit" className="btn btn-outline btn-success btn-sm">
-            Save
+            保存
           </button>
         </div>
       </form>

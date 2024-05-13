@@ -64,10 +64,10 @@ const Character_MiniEditor: FC<{ initReq: TablesInsert<"characters">; onSave: ()
               onCancel();
             }}
           >
-            Cancel
+            キャンセル
           </button>
           <button type="submit" className="btn btn-outline btn-success btn-sm">
-            Save
+            保存
           </button>
         </div>
       </form>
