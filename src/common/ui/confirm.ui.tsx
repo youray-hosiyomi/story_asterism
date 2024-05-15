@@ -15,11 +15,13 @@ export type UIConfirm_RenderContentProps = {
 export type UIConfirm_FuncProps = {
   className?: UIDialogClassName;
   RenderContent: FC<UIConfirm_RenderContentProps>;
+  okFunc?: () => Promise<void>;
   onOk?: () => void;
   onCancel?: () => void;
 };
 
 export type UIConfirm_BaseFuncProps = UIConfirm_BaseRenderContentFuncProps & {
+  okFunc?: () => Promise<void>;
   onOk?: () => void;
   onCancel?: () => void;
 };
@@ -54,10 +56,13 @@ const UIConfirmDialogList: FC<UIConfirmDialogNodeProps> = ({
     setPropsList((prev) => prev.filter((_, i) => i < index));
   }
   function ok() {
-    if (props?.onOk) {
-      props.onOk();
-    }
-    close();
+    const process = props.okFunc ? props.okFunc() : Promise.resolve();
+    process.then(() => {
+      if (props?.onOk) {
+        props.onOk();
+      }
+      close();
+    });
   }
   function cancel() {
     if (props?.onCancel) {
@@ -99,10 +104,11 @@ export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) =>
   const confirm = useCallback((p: UIConfirm_FuncProps) => {
     setPropsList((prev) => prev.concat(p));
   }, []);
-  const baseConfirm = useCallback(({ onOk, onCancel, ...baseProps }: UIConfirm_BaseFuncProps) => {
+  const baseConfirm = useCallback(({ onOk, onCancel, okFunc, ...baseProps }: UIConfirm_BaseFuncProps) => {
     setPropsList((prev) =>
       prev.concat({
         RenderContent: makeBaseRenderContent(baseProps),
+        okFunc,
         onOk,
         onCancel,
       }),
