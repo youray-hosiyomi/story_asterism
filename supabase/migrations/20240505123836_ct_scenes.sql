@@ -2,7 +2,7 @@ CREATE TABLE
   "scenes" (
     id UUID DEFAULT uuid_generate_v4 (),
     episode_id UUID NOT NULL,
-    event_id UUID NOT NULL,
+    event_id UUID,
     universe_id UUID NOT NULL,
     NAME VARCHAR(25) NOT NULL,
     detail TEXT,
