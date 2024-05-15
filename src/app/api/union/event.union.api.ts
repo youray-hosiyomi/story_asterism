@@ -40,7 +40,7 @@ function makeEventUnions(
   const characterEventStocker = multiStock<Tables<"character&event$relations">>((e) => e.event_id).setAll(
     characterEvents,
   );
-  const sceneStocker = multiStock<Tables<"scenes">>((e) => e.event_id).setAll(scenes);
+  const sceneStocker = multiStock<Tables<"scenes">>((e) => e.event_id ?? "").setAll(scenes);
   return events
     .map((event): EventUnion => {
       return {
@@ -87,7 +87,10 @@ export async function listEventUnionByEpisode(universe_id: string, episode_id: s
   const episode = await episodeApi.find({ id: episode_id, universe_id });
   if (!episode) return [];
   const scenes = await sceneApi.list({ universe_id, episode_id });
-  const events = await eventApi.list({ ids: scenes.map((r) => r.event_id), universe_id });
+  const events = await eventApi.list({
+    ids: scenes.reduce((sum: string[], r) => (r.event_id ? sum.concat(r.event_id) : sum), []),
+    universe_id,
+  });
   const periods = await periodApi.list({ ids: events.map((ev) => ev.period_id), universe_id });
   const characterEvents = await characterEventApi.list({ event_ids: events.map((e) => e.id), universe_id });
   const characters = await characterApi.list({ ids: characterEvents.map((ev) => ev.character_id), universe_id });

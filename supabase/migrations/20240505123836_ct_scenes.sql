@@ -4,6 +4,7 @@ CREATE TABLE
     episode_id UUID NOT NULL,
     event_id UUID NOT NULL,
     universe_id UUID NOT NULL,
+    NAME VARCHAR(25) NOT NULL,
     detail TEXT,
     seq INTEGER,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

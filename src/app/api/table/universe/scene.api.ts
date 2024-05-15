@@ -28,8 +28,9 @@ class SceneApi extends ApiHandler<"scenes", "id" | "universe_id", Scene_SearchPa
       ],
     });
   }
-  emptyReq(universe_id: string, episode_id: string, event_id: string): TablesInsert<"scenes"> {
+  emptyReq(universe_id: string, episode_id: string, event_id: string | null = null): TablesInsert<"scenes"> {
     return {
+      name: "",
       episode_id,
       event_id,
       universe_id: universe_id,

@@ -1,5 +1,5 @@
 import { cn } from "@shadcn/lib/utils";
-import { DetailedHTMLProps, FC, HTMLAttributes, useMemo } from "react";
+import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 
 export type UILoadingKind = "spiner";
 
@@ -22,6 +22,21 @@ export const UILoading: FC<UILoadingProps> = ({ className, kind, ...props }) => 
       <span {...props} className={cn("loading", classNameByKind, className ?? "")} />
     </>
   );
+};
+
+export const UILoadingContent: FC<UILoadingProps & { isLoading?: boolean; children?: ReactNode }> = ({
+  isLoading,
+  children,
+  ...props
+}) => {
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <UILoading {...props} />
+      </div>
+    );
+  }
+  return children;
 };
 
 export const UILoadingArea: FC = () => {

@@ -8,6 +8,7 @@ import Episode_DetailHome from "@/app/features/universes/episode/detail-home.com
 import { cn } from "@shadcn/lib/utils";
 import Episode_DetailSentence from "@/app/features/universes/episode/detail-sentence.component";
 import Episode_DetailSentenceEditor from "@/app/features/universes/episode/detail-sentence-editor.component";
+import Scene_List from "@/app/features/universes/scene/list.component";
 
 const baseModeOpts: OptionItem<EpisodeDetail_Mode>[] = [
   { value: "home", label: "詳細" },
@@ -27,7 +28,7 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
     return <Episode_DetailSentenceEditor initReq={episode} goHome={() => onChangeMode("sentence")} />;
   }
   if (mode == "scenes-editing") {
-    return <></>;
+    return <Scene_List episode={episode} editing={true} toggleEditing={() => onChangeMode("scenes")} />;
   }
   return (
     <div className="space-y-2">
@@ -52,7 +53,7 @@ const Universe_Episodes_Detail_Page: AuthPageFC = () => {
       {mode == "sentence" && (
         <Episode_DetailSentence episode={episode} startEdit={() => onChangeMode("sentence-editing")} />
       )}
-      {mode == "scenes" && <></>}
+      {mode == "scenes" && <Scene_List episode={episode} toggleEditing={() => onChangeMode("scenes-editing")} />}
     </div>
   );
 };

@@ -413,8 +413,9 @@ export interface Database {
           created_by: string | null;
           detail: string | null;
           episode_id: string;
-          event_id: string;
+          event_id: string | null;
           id: string;
+          name: string;
           seq: number | null;
           universe_id: string;
           updated_at: string | null;
@@ -425,8 +426,9 @@ export interface Database {
           created_by?: string | null;
           detail?: string | null;
           episode_id: string;
-          event_id: string;
+          event_id?: string | null;
           id?: string;
+          name: string;
           seq?: number | null;
           universe_id: string;
           updated_at?: string | null;
@@ -437,8 +439,9 @@ export interface Database {
           created_by?: string | null;
           detail?: string | null;
           episode_id?: string;
-          event_id?: string;
+          event_id?: string | null;
           id?: string;
+          name?: string;
           seq?: number | null;
           universe_id?: string;
           updated_at?: string | null;
@@ -457,13 +460,6 @@ export interface Database {
             columns: ["episode_id", "universe_id"];
             isOneToOne: false;
             referencedRelation: "episodes";
-            referencedColumns: ["id", "universe_id"];
-          },
-          {
-            foreignKeyName: "scenes_event_id_universe_id_fkey";
-            columns: ["event_id", "universe_id"];
-            isOneToOne: false;
-            referencedRelation: "events";
             referencedColumns: ["id", "universe_id"];
           },
           {
