@@ -35,7 +35,7 @@ const Scene_Editor: FC<{ initReq: TablesInsert<"scenes">; onSave: () => void; on
         </UIFormControl>
         <UIFormControl labelText="シーン詳細">
           <textarea
-            className="textarea textarea-bordered"
+            className="textarea textarea-bordered min-h-52"
             value={req.detail ?? ""}
             onChange={(ev) => {
               setReq({

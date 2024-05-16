@@ -72,7 +72,7 @@ const ProfileEditor: FC<{ auth: Auth }> = ({ auth }) => {
         </UIFormControl>
         <UIFormControl labelText="詳細">
           <textarea
-            className="textarea textarea-bordered"
+            className="textarea textarea-bordered min-h-52"
             value={req.detail ?? ""}
             onChange={(ev) => {
               const detail = ev.target.value;
