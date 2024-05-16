@@ -36,68 +36,70 @@ export const UIConfirm_Context = createContext<{
 
 export const useConfirm = () => useContext(UIConfirm_Context);
 
-interface UIConfirmDialogNodeProps {
-  confirm: (props: UIConfirm_FuncProps) => void;
-  baseConfirm: (props: UIConfirm_BaseFuncProps) => void;
-  index?: number;
-  propsList: UIConfirm_FuncProps[];
-  setPropsList: (handler: (prev: UIConfirm_FuncProps[]) => UIConfirm_FuncProps[]) => void;
-}
+// interface UIConfirmDialogNodeProps {
+//   confirm: (props: UIConfirm_FuncProps) => void;
+//   baseConfirm: (props: UIConfirm_BaseFuncProps) => void;
+//   index?: number;
+//   propsList: UIConfirm_FuncProps[];
+//   setPropsList: (handler: (prev: UIConfirm_FuncProps[]) => UIConfirm_FuncProps[]) => void;
+// }
 
-const UIConfirmDialogList: FC<UIConfirmDialogNodeProps> = ({
-  confirm,
-  baseConfirm,
-  propsList,
-  setPropsList,
-  index = 0,
-}) => {
-  const [props, ...leastProps] = propsList;
-  function close() {
-    setPropsList((prev) => prev.filter((_, i) => i < index));
-  }
-  function ok() {
-    const process = props.okFunc ? props.okFunc() : Promise.resolve();
-    process.then(() => {
-      if (props?.onOk) {
-        props.onOk();
-      }
-      close();
-    });
-  }
-  function cancel() {
-    if (props?.onCancel) {
-      props.onCancel();
-    }
-    close();
-  }
-  return (
-    <UIDialog
-      isOpen={!!props}
-      onChangeIsOpen={(isOpen) => {
-        if (!isOpen) {
-          cancel();
-        }
-      }}
-    >
-      {props && (
-        <>
-          <props.RenderContent ok={ok} cancel={cancel} confirm={confirm} baseConfirm={baseConfirm} />
-          <UIConfirmDialogList
-            confirm={confirm}
-            baseConfirm={baseConfirm}
-            propsList={leastProps}
-            setPropsList={(handler) =>
-              setPropsList((prev) => {
-                const [prevProps, ...prevLeastPropsList] = prev;
-                return [prevProps].concat(...handler(prevLeastPropsList));
-              })
-            }
-          />
-        </>
-      )}
-    </UIDialog>
-  );
-};
+// const UIConfirmDialogList: FC<UIConfirmDialogNodeProps> = ({
+//   confirm,
+//   baseConfirm,
+//   propsList,
+//   setPropsList,
+//   index = 0,
+// }) => {
+//   const [props, ...leastProps] = propsList;
+//   function close() {
+//     setPropsList((prev) => prev.filter((_, i) => i < index));
+//   }
+//   function ok() {
+//     const process = props.okFunc ? props.okFunc() : Promise.resolve();
+//     process.then(() => {
+//       if (props?.onOk) {
+//         props.onOk();
+//       }
+//       close();
+//     });
+//   }
+//   function cancel() {
+//     if (props?.onCancel) {
+//       props.onCancel();
+//     }
+//     close();
+//   }
+//   return (
+//     <UIDialog
+//       isOpen={!!props}
+//       onChangeIsOpen={(isOpen) => {
+//         if (!isOpen) {
+//           cancel();
+//         }
+//       }}
+//     >
+//       {props && (
+//         <>
+//           <props.RenderContent ok={ok} cancel={cancel} confirm={confirm} baseConfirm={baseConfirm} />
+//           <UIConfirmDialogList
+//             confirm={confirm}
+//             baseConfirm={baseConfirm}
+//             propsList={leastProps}
+//             setPropsList={(handler) =>
+//               setPropsList((prev) => {
+//                 const [prevProps, ...prevLeastPropsList] = prev;
+//                 return [prevProps].concat(...handler(prevLeastPropsList));
+//               })
+//             }
+//           />
+//         </>
+//       )}
+//     </UIDialog>
+//   );
+// };
+
+const defaultZIndex: number = 999;
 
 export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) => {
   const [propsList, setPropsList] = useState<UIConfirm_FuncProps[]>([]);
@@ -123,12 +125,46 @@ export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) =>
         }}
       >
         {children}
-        <UIConfirmDialogList
+        {propsList.map((props, index) => {
+          const z = defaultZIndex + index;
+          function close() {
+            setPropsList((prev) => prev.filter((_, i) => i < index));
+          }
+          function ok() {
+            const process = props.okFunc ? props.okFunc() : Promise.resolve();
+            process.then(() => {
+              if (props?.onOk) {
+                props.onOk();
+              }
+              close();
+            });
+          }
+          function cancel() {
+            if (props?.onCancel) {
+              props.onCancel();
+            }
+            close();
+          }
+          return (
+            <UIDialog
+              style={{ zIndex: z }}
+              isOpen={!!props}
+              onChangeIsOpen={(isOpen) => {
+                if (!isOpen) {
+                  cancel();
+                }
+              }}
+            >
+              <props.RenderContent ok={ok} cancel={cancel} confirm={confirm} baseConfirm={baseConfirm} />
+            </UIDialog>
+          );
+        })}
+        {/* <UIConfirmDialogList
           propsList={propsList}
           setPropsList={(handler) => setPropsList(handler)}
           confirm={confirm}
           baseConfirm={baseConfirm}
-        />
+        /> */}
       </UIConfirm_Context.Provider>
     </>
   );
