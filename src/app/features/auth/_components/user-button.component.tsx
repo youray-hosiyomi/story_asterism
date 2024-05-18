@@ -27,21 +27,19 @@ const AuthUserButton: FC<AuthUserButtonProps> = ({ auth: { profile, profileImage
           className="dropdown-content bg-base-100 w-60 rounded-md shadow-md outline outline-1 outline-gray-200 z-[1]"
           style={{ zIndex: contentZIndex }}
         >
+          <div className="p-1">
+            <Link to={wsPageLinkConfig["/ws/settings"].path} className="w-full block space-y-2 hover:bg-base-200 py-2">
+              <div className="flex items-center justify-center w-full px-4">
+                <UserAvatar src={profileImage?.url} className="w-full rounded-lg bg-base-100" />
+              </div>
+              <div className="text-center mx-3 font-semibold">{profile?.username}</div>
+              <div className="text-center text-xs">{user.email}</div>
+            </Link>
+          </div>
+          <hr className="" />
           <UIMenuList
             className=""
             items={[
-              {
-                id: "settings",
-                content: (
-                  <Link to={wsPageLinkConfig["/ws/settings"].path} className="w-full block space-y-2 hover:bg-base-200">
-                    <div className="flex items-center justify-center w-full">
-                      <UserAvatar src={profileImage?.url} className="w-full rounded-lg bg-base-100" />
-                    </div>
-                    <div className="text-center mx-3 font-semibold">{profile?.username}</div>
-                    <div className="text-center text-xs">{user.email}</div>
-                  </Link>
-                ),
-              },
               {
                 id: "logout",
                 content: (

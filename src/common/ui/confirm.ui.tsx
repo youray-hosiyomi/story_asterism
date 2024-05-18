@@ -147,6 +147,7 @@ export const UIConfirm_Provider: FC<{ children: ReactNode }> = ({ children }) =>
           }
           return (
             <UIDialog
+              key={index}
               style={{ zIndex: z }}
               isOpen={!!props}
               onChangeIsOpen={(isOpen) => {

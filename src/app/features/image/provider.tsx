@@ -10,6 +10,7 @@ import { UILoadingArea } from "@/common/ui/loading.ui";
 import UserAvatar from "../user/avatar.component";
 import { cn } from "@shadcn/lib/utils";
 import { StorageImage } from "@/common/utils/api.util";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ImageCropParams = {
   zoom: number;
@@ -134,7 +135,8 @@ const ImageSelector: FC<UIConfirm_RenderContentProps & { config: ImageSelectConf
   config,
 }) => {
   const [selectedFileName, setSelectedImage] = useState<string | null>(config.prevFileName ?? null);
-  const { data: images, isLoading } = config.api.useList(config.folderPath, { limit: 6 });
+  const queryClient = useQueryClient();
+  const { data: images, isLoading } = config.api.useList(config.folderPath, { limit: 12 });
   function select() {
     const image = images?.find((image) => image.file.name == selectedFileName);
     if (image) {
@@ -148,6 +150,10 @@ const ImageSelector: FC<UIConfirm_RenderContentProps & { config: ImageSelectConf
         return <NewImageEditor {...props} config={config} file={file} />;
       },
       onOk() {
+        queryClient.invalidateQueries({
+          queryKey: [config.api.queryKey],
+          type: "active",
+        });
         ok();
       },
     });
