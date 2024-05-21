@@ -66,6 +66,19 @@ const Episode_Detail_Editor: FC<{ initReq: TablesInsert<"episodes">; goHome: () 
             }}
           />
         </UIFormControl>
+        <UIFormControl labelText="目的">
+          <textarea
+            className="textarea textarea-bordered min-h-52"
+            value={req.purpose ?? ""}
+            onChange={(ev) => {
+              const purpose = ev.target.value;
+              setReq({
+                ...req,
+                purpose,
+              });
+            }}
+          />
+        </UIFormControl>
         <UIFormControl labelText="起">
           <textarea
             className="textarea textarea-bordered min-h-52"
@@ -114,6 +127,19 @@ const Episode_Detail_Editor: FC<{ initReq: TablesInsert<"episodes">; goHome: () 
               setReq({
                 ...req,
                 part_4,
+              });
+            }}
+          />
+        </UIFormControl>
+        <UIFormControl labelText="魅力">
+          <textarea
+            className="textarea textarea-bordered min-h-52"
+            value={req.charm ?? ""}
+            onChange={(ev) => {
+              const charm = ev.target.value;
+              setReq({
+                ...req,
+                charm,
               });
             }}
           />

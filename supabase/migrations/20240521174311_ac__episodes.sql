@@ -1,0 +1,3 @@
+ALTER TABLE episodes
+ADD COLUMN purpose TEXT,
+ADD COLUMN charm TEXT;

@@ -149,36 +149,42 @@ export interface Database {
       characters: {
         Row: {
           back_story: string | null;
+          charm: string | null;
           created_at: string | null;
           created_by: string | null;
           detail: string | null;
           id: string;
           image_key: string | null;
           name: string;
+          personality: string | null;
           universe_id: string;
           updated_at: string | null;
           updated_by: string | null;
         };
         Insert: {
           back_story?: string | null;
+          charm?: string | null;
           created_at?: string | null;
           created_by?: string | null;
           detail?: string | null;
           id?: string;
           image_key?: string | null;
           name: string;
+          personality?: string | null;
           universe_id: string;
           updated_at?: string | null;
           updated_by?: string | null;
         };
         Update: {
           back_story?: string | null;
+          charm?: string | null;
           created_at?: string | null;
           created_by?: string | null;
           detail?: string | null;
           id?: string;
           image_key?: string | null;
           name?: string;
+          personality?: string | null;
           universe_id?: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -258,6 +264,7 @@ export interface Database {
       };
       episodes: {
         Row: {
+          charm: string | null;
           content: string | null;
           created_at: string | null;
           created_by: string | null;
@@ -266,6 +273,7 @@ export interface Database {
           part_2: string | null;
           part_3: string | null;
           part_4: string | null;
+          purpose: string | null;
           summary: string | null;
           title: string;
           universe_id: string;
@@ -273,6 +281,7 @@ export interface Database {
           updated_by: string | null;
         };
         Insert: {
+          charm?: string | null;
           content?: string | null;
           created_at?: string | null;
           created_by?: string | null;
@@ -281,6 +290,7 @@ export interface Database {
           part_2?: string | null;
           part_3?: string | null;
           part_4?: string | null;
+          purpose?: string | null;
           summary?: string | null;
           title: string;
           universe_id: string;
@@ -288,6 +298,7 @@ export interface Database {
           updated_by?: string | null;
         };
         Update: {
+          charm?: string | null;
           content?: string | null;
           created_at?: string | null;
           created_by?: string | null;
@@ -296,6 +307,7 @@ export interface Database {
           part_2?: string | null;
           part_3?: string | null;
           part_4?: string | null;
+          purpose?: string | null;
           summary?: string | null;
           title?: string;
           universe_id?: string;

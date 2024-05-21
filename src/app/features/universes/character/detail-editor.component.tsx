@@ -116,6 +116,32 @@ const Character_Detail_Editor: FC<{ initReq: TablesInsert<"characters">; goHome:
             }}
           />
         </UIFormControl>
+        <UIFormControl labelText="性格">
+          <textarea
+            className="textarea textarea-bordered min-h-52"
+            value={req.personality ?? ""}
+            onChange={(ev) => {
+              const personality = ev.target.value;
+              setReq({
+                ...req,
+                personality,
+              });
+            }}
+          />
+        </UIFormControl>
+        <UIFormControl labelText="魅力">
+          <textarea
+            className="textarea textarea-bordered min-h-52"
+            value={req.charm ?? ""}
+            onChange={(ev) => {
+              const charm = ev.target.value;
+              setReq({
+                ...req,
+                charm,
+              });
+            }}
+          />
+        </UIFormControl>
       </div>
       <div className="flex justify-end items-center space-x-2 sticky bottom-4">
         <button
