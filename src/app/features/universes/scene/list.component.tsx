@@ -1,5 +1,5 @@
 import { Tables, TablesInsert } from "@supabase/database.type";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useSceneUnions } from "./hooks";
 import { UILoadingContent } from "@/common/ui/loading.ui";
 import { ArrowLeftIcon, PenToolIcon, TrashIcon } from "lucide-react";
@@ -9,6 +9,8 @@ import { sceneApi } from "@/app/api/table/universe/scene.api";
 import Scene_Editor from "./editor.component";
 import UILongText from "@/common/ui/long-text";
 import { cn } from "@shadcn/lib/utils";
+import UISortableList from "@/common/ui/sortable-list.ui";
+import { SceneUnion } from "@/app/api/union/scene.union.api";
 
 type Scene_ListProps = {
   episode: Tables<"episodes">;
@@ -19,6 +21,7 @@ type Scene_ListProps = {
 const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) => {
   const { confirm, baseConfirm } = useConfirm();
   const { data: sceneUnions, isLoading } = useSceneUnions({ episode_id: episode.id, universe_id: episode.universe_id });
+  const [items, setItems] = useState<SceneUnion[]>(sceneUnions ?? []);
   const deleteScene = sceneApi.mutation.useDelete();
   const onEdit = useCallback(
     (initReq: TablesInsert<"scenes"> = sceneApi.emptyReq(episode.universe_id, episode.id)) => {
@@ -61,46 +64,62 @@ const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) =>
       editing && toggleEditing && toggleEditing();
     },
   });
+  useEffect(() => {
+    if (!isLoading && !!sceneUnions) {
+      setItems(sceneUnions);
+    }
+  }, [isLoading, sceneUnions]);
   return (
     <UILoadingContent isLoading={isLoading} className="loading-lg">
       <div>
         <div className="space-y-3">
-          {sceneUnions?.map((union) => {
-            return (
-              <div
-                key={union.scene.id}
-                className={cn(
-                  "rounded-md p-3 space-y-1 border flex items-center border-base-content group",
-                  editing && "hover:shadow-lg",
-                )}
-              >
-                <div className="flex-auto">
-                  <div className="font-semibold">{union.scene.name}</div>
-                  <UILongText className="text-sm">{union.scene.detail}</UILongText>
-                </div>
-                {editing && (
-                  <div className="flex-none hidden group-hover:flex items-center space-x-2">
-                    <button
-                      className="btn btn-sm btn-circle btn-success btn-outline"
-                      onClick={() => {
-                        onEdit(union.scene);
-                      }}
-                    >
-                      <PenToolIcon />
-                    </button>
-                    <button
-                      className="btn btn-sm btn-circle btn-error btn-outline"
-                      onClick={() => {
-                        onDelete(union.scene);
-                      }}
-                    >
-                      <TrashIcon />
-                    </button>
+          <UISortableList
+            items={items}
+            disabled={!editing}
+            setItems={setItems}
+            item2id={(item) => item.scene.id}
+            className="space-y-3"
+            RenderItem={(props) => {
+              const union = props.item;
+              return (
+                <div
+                  key={union.scene.id}
+                  className={cn(
+                    "rounded-md p-3 space-y-1 border bg-base-100 flex items-center border-base-content group",
+                    editing && "hover:shadow-lg",
+                  )}
+                >
+                  <div className="flex-auto">
+                    <div className="font-semibold">{union.scene.name}</div>
+                    <UILongText className="text-sm">{union.scene.detail}</UILongText>
                   </div>
-                )}
-              </div>
-            );
-          })}
+                  {editing && (
+                    <div className="flex-none hidden group-hover:flex items-center space-x-2">
+                      <button
+                        className="btn btn-sm btn-circle btn-success btn-outline"
+                        onClick={(ev) => {
+                          console.log(ev);
+                          ev.preventDefault();
+                          ev.stopPropagation();
+                          onEdit(union.scene);
+                        }}
+                      >
+                        <PenToolIcon />
+                      </button>
+                      <button
+                        className="btn btn-sm btn-circle btn-error btn-outline"
+                        onClick={() => {
+                          onDelete(union.scene);
+                        }}
+                      >
+                        <TrashIcon />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            }}
+          />
           {editing && (
             <div className="w-full text-center">
               <button

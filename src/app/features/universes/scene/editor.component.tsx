@@ -2,12 +2,14 @@ import { FC, useState } from "react";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { TablesInsert } from "@supabase/database.type";
 import { sceneApi } from "@/app/api/table/universe/scene.api";
+import { makeUUID } from "@/common/utils/uid.util";
 
-const Scene_Editor: FC<{ initReq: TablesInsert<"scenes">; onSave: () => void; onCancel: () => void }> = ({
-  initReq,
-  onSave,
-  onCancel,
-}) => {
+const Scene_Editor: FC<{
+  initReq: TablesInsert<"scenes">;
+  upsertDisabled?: boolean;
+  onSave: (req: TablesInsert<"scenes">) => void;
+  onCancel: () => void;
+}> = ({ initReq, onSave, onCancel, upsertDisabled }) => {
   const [req, setReq] = useState<TablesInsert<"scenes">>(initReq);
   const upsert = sceneApi.mutation.useUpsert();
   return (
@@ -16,9 +18,17 @@ const Scene_Editor: FC<{ initReq: TablesInsert<"scenes">; onSave: () => void; on
         className="space-y-3 mx-auto"
         onSubmit={(ev) => {
           ev.preventDefault();
-          upsert.mutateAsync(req).then(() => {
-            onSave();
-          });
+          const r = {
+            ...req,
+            id: req.id ?? makeUUID(),
+          };
+          if (!upsertDisabled) {
+            upsert.mutateAsync(r).then(() => {
+              onSave(r);
+            });
+          } else {
+            onSave(r);
+          }
         }}
       >
         <UIFormControl labelText="シーン名">
