@@ -2,7 +2,7 @@ import { ApiHandler } from "@/common/utils/api.util";
 import { supabase } from "@supabase/client";
 import { TablesInsert } from "@supabase/database.type";
 
-export type Character__And__Event___Relation_SearchParams_SearchParams = {
+export type Character__And__Event___Relation_SearchParams = {
   universe_id: string;
   character_id?: string;
   event_ids?: string[];
@@ -11,7 +11,7 @@ export type Character__And__Event___Relation_SearchParams_SearchParams = {
 class CharacterEventApi extends ApiHandler<
   "character&event$relations",
   "character_id" | "event_id" | "universe_id",
-  Character__And__Event___Relation_SearchParams_SearchParams
+  Character__And__Event___Relation_SearchParams
 > {
   constructor() {
     super(supabase, {

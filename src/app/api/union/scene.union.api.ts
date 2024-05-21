@@ -1,4 +1,3 @@
-import { makeCompareFn } from "@/common/utils/array.util";
 import { multiStock, singleStock } from "@/common/utils/stocker.util";
 import { Tables } from "@supabase/database.type";
 import { episodeApi } from "../table/universe/episode.api";
@@ -37,30 +36,28 @@ function makeSceneUnions(
   const characterEventStocker = multiStock<Tables<"character&event$relations">>((e) => e.event_id).setAll(
     characterEvents,
   );
-  return scenes
-    .map((scene): SceneUnion => {
-      if (!scene.event_id) {
-        return {
-          scene,
-        };
-      }
-      const event = eventStocker.getUnsafe(scene.event_id);
-      const period = periodStocker.getUnsafe(event.period_id);
+  return scenes.map((scene): SceneUnion => {
+    if (!scene.event_id) {
       return {
         scene,
-        eventUnion: {
-          event,
-          period,
-          characterUnions: characterEventStocker.get(event.id).map((relation) => {
-            return {
-              relation,
-              character: characterStocker.getUnsafe(relation.character_id),
-            };
-          }),
-        },
       };
-    })
-    .sort(makeCompareFn([(union) => union.scene.seq ?? 0]));
+    }
+    const event = eventStocker.getUnsafe(scene.event_id);
+    const period = periodStocker.getUnsafe(event.period_id);
+    return {
+      scene,
+      eventUnion: {
+        event,
+        period,
+        characterUnions: characterEventStocker.get(event.id).map((relation) => {
+          return {
+            relation,
+            character: characterStocker.getUnsafe(relation.character_id),
+          };
+        }),
+      },
+    };
+  });
 }
 
 export async function listSceneUnionByEpisode(universe_id: string, episode_id: string) {

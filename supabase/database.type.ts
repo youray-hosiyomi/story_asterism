@@ -97,6 +97,55 @@ export interface Database {
           },
         ];
       };
+      character$orders: {
+        Row: {
+          character_id_list: string[];
+          created_at: string | null;
+          created_by: string | null;
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          character_id_list: string[];
+          created_at?: string | null;
+          created_by?: string | null;
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          character_id_list?: string[];
+          created_at?: string | null;
+          created_by?: string | null;
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "character$orders_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "character$orders_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: true;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "character$orders_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       characters: {
         Row: {
           back_story: string | null;
@@ -106,7 +155,6 @@ export interface Database {
           id: string;
           image_key: string | null;
           name: string;
-          seq: number | null;
           universe_id: string;
           updated_at: string | null;
           updated_by: string | null;
@@ -119,7 +167,6 @@ export interface Database {
           id?: string;
           image_key?: string | null;
           name: string;
-          seq?: number | null;
           universe_id: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -132,7 +179,6 @@ export interface Database {
           id?: string;
           image_key?: string | null;
           name?: string;
-          seq?: number | null;
           universe_id?: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -161,6 +207,55 @@ export interface Database {
           },
         ];
       };
+      episode$orders: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          episode_id_list: string[];
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          episode_id_list: string[];
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          episode_id_list?: string[];
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "episode$orders_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "episode$orders_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: true;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "episode$orders_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       episodes: {
         Row: {
           content: string | null;
@@ -171,7 +266,6 @@ export interface Database {
           part_2: string | null;
           part_3: string | null;
           part_4: string | null;
-          seq: number | null;
           summary: string | null;
           title: string;
           universe_id: string;
@@ -187,7 +281,6 @@ export interface Database {
           part_2?: string | null;
           part_3?: string | null;
           part_4?: string | null;
-          seq?: number | null;
           summary?: string | null;
           title: string;
           universe_id: string;
@@ -203,7 +296,6 @@ export interface Database {
           part_2?: string | null;
           part_3?: string | null;
           part_4?: string | null;
-          seq?: number | null;
           summary?: string | null;
           title?: string;
           universe_id?: string;
@@ -314,6 +406,55 @@ export interface Database {
           },
         ];
       };
+      period$orders: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          period_id_list: string[];
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          period_id_list: string[];
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          period_id_list?: string[];
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "period$orders_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "period$orders_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: true;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "period$orders_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       periods: {
         Row: {
           created_at: string | null;
@@ -322,7 +463,6 @@ export interface Database {
           id: string;
           is_real: boolean | null;
           name: string;
-          seq: number | null;
           universe_id: string;
           updated_at: string | null;
           updated_by: string | null;
@@ -334,7 +474,6 @@ export interface Database {
           id?: string;
           is_real?: boolean | null;
           name: string;
-          seq?: number | null;
           universe_id: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -346,7 +485,6 @@ export interface Database {
           id?: string;
           is_real?: boolean | null;
           name?: string;
-          seq?: number | null;
           universe_id?: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -407,6 +545,65 @@ export interface Database {
           },
         ];
       };
+      scene$orders: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          episode_id: string;
+          scene_id_list: string[];
+          universe_id: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          episode_id: string;
+          scene_id_list: string[];
+          universe_id: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          episode_id?: string;
+          scene_id_list?: string[];
+          universe_id?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "scene$orders_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "scene$orders_episode_id_universe_id_fkey";
+            columns: ["episode_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "episodes";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "scene$orders_universe_id_fkey";
+            columns: ["universe_id"];
+            isOneToOne: false;
+            referencedRelation: "universes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "scene$orders_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       scenes: {
         Row: {
           created_at: string | null;
@@ -416,7 +613,6 @@ export interface Database {
           event_id: string | null;
           id: string;
           name: string;
-          seq: number | null;
           universe_id: string;
           updated_at: string | null;
           updated_by: string | null;
@@ -429,7 +625,6 @@ export interface Database {
           event_id?: string | null;
           id?: string;
           name: string;
-          seq?: number | null;
           universe_id: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -442,7 +637,6 @@ export interface Database {
           event_id?: string | null;
           id?: string;
           name?: string;
-          seq?: number | null;
           universe_id?: string;
           updated_at?: string | null;
           updated_by?: string | null;
@@ -460,6 +654,13 @@ export interface Database {
             columns: ["episode_id", "universe_id"];
             isOneToOne: false;
             referencedRelation: "episodes";
+            referencedColumns: ["id", "universe_id"];
+          },
+          {
+            foreignKeyName: "scenes_event_id_universe_id_fkey";
+            columns: ["event_id", "universe_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
             referencedColumns: ["id", "universe_id"];
           },
           {
@@ -544,34 +745,6 @@ export interface Database {
       auth_check_universe: {
         Args: {
           universe_id: string;
-        };
-        Returns: boolean;
-      };
-      exist_character_by_seq: {
-        Args: {
-          universe_id: string;
-          seq: number;
-        };
-        Returns: boolean;
-      };
-      exist_episode_by_seq: {
-        Args: {
-          universe_id: string;
-          seq: number;
-        };
-        Returns: boolean;
-      };
-      exist_period_by_seq: {
-        Args: {
-          universe_id: string;
-          seq: number;
-        };
-        Returns: boolean;
-      };
-      exist_scene_by_seq: {
-        Args: {
-          universe_id: string;
-          seq: number;
         };
         Returns: boolean;
       };

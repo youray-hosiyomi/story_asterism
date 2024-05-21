@@ -62,7 +62,6 @@ function makeEventUnions(
     })
     .sort(
       makeCompareFn([
-        (union) => union.period.seq ?? 0,
         (union) => union.event.year,
         (union) => union.event.month,
         (union) => union.event.date,

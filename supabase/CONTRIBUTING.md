@@ -5,6 +5,7 @@
 ```bash
 supabase migration new create_todo_tables
 supabase db reset
+supabase db reset --linked
 supabase link --project-ref <project-id>
 supabase db remote commit
 supabase db push

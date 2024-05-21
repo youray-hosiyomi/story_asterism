@@ -15,10 +15,12 @@ CREATE TABLE
 
 ALTER TABLE universes ENABLE ROW LEVEL SECURITY;
 
-CREATE TRIGGER on_create_universes BEFORE INSERT ON universes FOR EACH ROW
+CREATE
+OR REPLACE TRIGGER on_create_universes BEFORE INSERT ON universes FOR EACH ROW
 EXECUTE PROCEDURE set_created ();
 
-CREATE TRIGGER on_update_universes BEFORE
+CREATE
+OR REPLACE TRIGGER on_update_universes BEFORE
 UPDATE ON universes FOR EACH ROW
 EXECUTE PROCEDURE set_updated ();
 
@@ -63,7 +65,8 @@ $$ LANGUAGE SQL STABLE;
 INSERT INTO
   STORAGE.buckets (id, NAME)
 VALUES
-  ('universes', 'universes');
+  ('universes', 'universes') ON CONFLICT (id)
+DO NOTHING;
 
 CREATE POLICY "universe images are protected" ON STORAGE.objects FOR
 SELECT

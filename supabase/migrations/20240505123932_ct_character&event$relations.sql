@@ -16,10 +16,12 @@ CREATE TABLE
 
 ALTER TABLE "character&event$relations" ENABLE ROW LEVEL SECURITY;
 
-CREATE TRIGGER "on_create_character&event$relation" BEFORE INSERT ON "character&event$relations" FOR EACH ROW
+CREATE
+OR REPLACE TRIGGER "on_create_character&event$relation" BEFORE INSERT ON "character&event$relations" FOR EACH ROW
 EXECUTE PROCEDURE set_created ();
 
-CREATE TRIGGER "on_update_character&event$relation" BEFORE
+CREATE
+OR REPLACE TRIGGER "on_update_character&event$relation" BEFORE
 UPDATE ON "character&event$relations" FOR EACH ROW
 EXECUTE PROCEDURE set_updated ();
 

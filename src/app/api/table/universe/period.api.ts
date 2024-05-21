@@ -19,7 +19,7 @@ class PeriodApi extends ApiHandler<"periods", "id" | "universe_id", Period_Searc
           if (params.ids) {
             prev.in("id", params.ids);
           }
-          return prev.order("seq", { ascending: true });
+          return prev;
         },
       ],
     });

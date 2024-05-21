@@ -11,6 +11,8 @@ import UILongText from "@/common/ui/long-text";
 import { cn } from "@shadcn/lib/utils";
 import UISortableList from "@/common/ui/sortable-list.ui";
 import { SceneUnion } from "@/app/api/union/scene.union.api";
+import { useM } from "@/common/utils/api.util";
+import { sceneOrderApi } from "@/app/api/table/universe/scene.order.api";
 
 type Scene_ListProps = {
   episode: Tables<"episodes">;
@@ -22,7 +24,17 @@ const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) =>
   const { confirm, baseConfirm } = useConfirm();
   const { data: sceneUnions, isLoading } = useSceneUnions({ episode_id: episode.id, universe_id: episode.universe_id });
   const [items, setItems] = useState<SceneUnion[]>(sceneUnions ?? []);
+  const [sortEditing, setSortEditing] = useState<boolean>(false);
   const deleteScene = sceneApi.mutation.useDelete();
+  const upsertSort = useM(sceneApi.tableName, async (ids: string[]) => {
+    const { universe_id, id: episode_id } = episode;
+    const prev = await sceneOrderApi.find({ universe_id, episode_id });
+    const req = prev ?? sceneOrderApi.emptyReq(universe_id, episode_id);
+    await sceneOrderApi.upsert({
+      ...req,
+      scene_id_list: ids,
+    });
+  });
   const onEdit = useCallback(
     (initReq: TablesInsert<"scenes"> = sceneApi.emptyReq(episode.universe_id, episode.id)) => {
       confirm({
@@ -69,13 +81,16 @@ const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) =>
       setItems(sceneUnions);
     }
   }, [isLoading, sceneUnions]);
+  useEffect(() => {
+    setSortEditing(false);
+  }, [editing]);
   return (
     <UILoadingContent isLoading={isLoading} className="loading-lg">
       <div>
         <div className="space-y-3">
           <UISortableList
             items={items}
-            disabled={!editing}
+            disabled={!sortEditing}
             setItems={setItems}
             item2id={(item) => item.scene.id}
             className="space-y-3"
@@ -93,7 +108,7 @@ const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) =>
                     <div className="font-semibold">{union.scene.name}</div>
                     <UILongText className="text-sm">{union.scene.detail}</UILongText>
                   </div>
-                  {editing && (
+                  {editing && !sortEditing && (
                     <div className="flex-none hidden group-hover:flex items-center space-x-2">
                       <button
                         className="btn btn-sm btn-circle btn-success btn-outline"
@@ -120,18 +135,51 @@ const Scene_List: FC<Scene_ListProps> = ({ episode, editing, toggleEditing }) =>
               );
             }}
           />
-          {editing && (
-            <div className="w-full text-center">
-              <button
-                className="btn btn-outline w-72"
-                onClick={() => {
-                  editing && onEdit();
-                }}
-              >
-                <div>追加</div>
-              </button>
-            </div>
-          )}
+          {editing ? (
+            !sortEditing ? (
+              <div className="w-full text-center space-x-3">
+                <button
+                  className="btn btn-outline"
+                  onClick={() => {
+                    editing && onEdit();
+                  }}
+                >
+                  <div>追加</div>
+                </button>
+                <button
+                  className="btn btn-outline"
+                  disabled={items.length <= 1}
+                  onClick={() => {
+                    editing && setSortEditing(true);
+                  }}
+                >
+                  <div>並び順編集</div>
+                </button>
+              </div>
+            ) : (
+              <div className="w-full text-center space-x-3">
+                <button
+                  className="btn btn-outline"
+                  onClick={() => {
+                    setSortEditing(false);
+                  }}
+                >
+                  <div>キャンセル</div>
+                </button>
+                <button
+                  className="btn btn-outline"
+                  disabled={items.length <= 1}
+                  onClick={() => {
+                    upsertSort.mutateAsync(items.map((item) => item.scene.id)).then(() => {
+                      setSortEditing(false);
+                    });
+                  }}
+                >
+                  <div>並び順確定</div>
+                </button>
+              </div>
+            )
+          ) : null}
         </div>
         <div className="absolute bottom-4 right-4">
           <button

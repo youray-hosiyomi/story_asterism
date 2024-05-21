@@ -65,7 +65,8 @@ begin
 end;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE TRIGGER on_auth_user_created
+CREATE
+OR REPLACE TRIGGER on_auth_user_created
 AFTER INSERT ON auth.users FOR EACH ROW
 EXECUTE PROCEDURE public.handle_new_user ();
 
@@ -73,7 +74,8 @@ EXECUTE PROCEDURE public.handle_new_user ();
 INSERT INTO
   STORAGE.buckets (id, NAME)
 VALUES
-  ('profiles', 'profiles');
+  ('profiles', 'profiles') ON CONFLICT (id)
+DO NOTHING;
 
 -- Set up access controls for storage.
 -- See https://supabase.com/docs/guides/storage#policy-examples for more details.
