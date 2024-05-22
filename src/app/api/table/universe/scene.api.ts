@@ -57,12 +57,15 @@ class SceneApi extends ApiHandler<"scenes", "id" | "universe_id", Scene_SearchPa
     });
     return await super.upsert(req);
   }
-  override async delete(primaryParams: PrimaryParams<"scenes", "id" | "universe_id" | "episode_id">) {
+  override async delete(primaryParams: PrimaryParams<"scenes", "id" | "universe_id">) {
+    const data = await this.find(primaryParams);
+    if (!data) return;
+    const { universe_id, episode_id } = data;
     const order = await sceneOrderApi.find({
-      universe_id: primaryParams.universe_id,
-      episode_id: primaryParams.episode_id,
+      universe_id,
+      episode_id,
     });
-    const orderReq = order ?? sceneOrderApi.emptyReq(primaryParams.universe_id, primaryParams.episode_id);
+    const orderReq = order ?? sceneOrderApi.emptyReq(universe_id, episode_id);
     await sceneOrderApi.upsert({
       ...orderReq,
       scene_id_list: orderReq.scene_id_list.filter((id) => id !== primaryParams.id),
