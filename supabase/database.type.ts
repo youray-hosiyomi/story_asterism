@@ -418,6 +418,54 @@ export interface Database {
           },
         ];
       };
+      ideas: {
+        Row: {
+          created_at: string | null;
+          created_by: string | null;
+          data_map: Json;
+          detail: string | null;
+          id: string;
+          name: string;
+          updated_at: string | null;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          created_by?: string | null;
+          data_map?: Json;
+          detail?: string | null;
+          id?: string;
+          name: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          created_by?: string | null;
+          data_map?: Json;
+          detail?: string | null;
+          id?: string;
+          name?: string;
+          updated_at?: string | null;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ideas_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ideas_updated_by_fkey";
+            columns: ["updated_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       period$orders: {
         Row: {
           created_at: string | null;

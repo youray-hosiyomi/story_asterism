@@ -1,20 +1,20 @@
-import { characterApi } from "@/app/api/table/universe/character.api";
+import { ideaApi } from "@/app/api/table/idea.api";
 import UIFormControl from "@/common/ui/form-control.ui";
 import { TablesInsert } from "@supabase/database.type";
 import { FC, useMemo, useState } from "react";
 
-const Character_MiniEditor: FC<{ initReq: TablesInsert<"characters">; onSave: () => void; onCancel: () => void }> = ({
+const Idea_MiniEditor: FC<{ initReq: TablesInsert<"ideas">; onSave: () => void; onCancel: () => void }> = ({
   initReq,
   onSave,
   onCancel,
 }) => {
   const [req, setReq] = useState(initReq);
-  const upsert = characterApi.mutation.useUpsert();
-  const remove = characterApi.mutation.useDelete();
+  const upsert = ideaApi.mutation.useUpsert();
+  const remove = ideaApi.mutation.useDelete();
   const isNew: boolean = useMemo(() => !req.id, [req]);
   function onRemove() {
     if (req.id)
-      remove.mutateAsync({ id: req.id, universe_id: req.universe_id }).then(() => {
+      remove.mutateAsync({ id: req.id }).then(() => {
         onSave();
       });
   }
@@ -30,7 +30,7 @@ const Character_MiniEditor: FC<{ initReq: TablesInsert<"characters">; onSave: ()
         }}
       >
         <div>
-          <UIFormControl labelText="キャラクター名">
+          <UIFormControl labelText="アイデア名">
             <input
               className="input input-bordered"
               value={req.name}
@@ -75,4 +75,4 @@ const Character_MiniEditor: FC<{ initReq: TablesInsert<"characters">; onSave: ()
   );
 };
 
-export default Character_MiniEditor;
+export default Idea_MiniEditor;

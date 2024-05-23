@@ -1,4 +1,13 @@
-import { BookTextIcon, EarthIcon, HomeIcon, LogInIcon, SettingsIcon, TextIcon, UsersIcon } from "lucide-react";
+import {
+  BookTextIcon,
+  EarthIcon,
+  HomeIcon,
+  LightbulbIcon,
+  LogInIcon,
+  SettingsIcon,
+  TextIcon,
+  UsersIcon,
+} from "lucide-react";
 import { makePageLinkMaps } from "../../common/utils/page.util";
 import { AuthPageProps, GuestPageProps, PageLinkConfig, PageLinkMap } from "../../common/type/page.type";
 import WS_Page from "@/app/pages/ws/page";
@@ -16,11 +25,19 @@ import Universe_Episodes_Detail_Page from "../pages/universe/episodes/[episode_i
 import Universe_Episode_Layout from "../pages/universe/episodes/layout";
 import Universe_Episodes_Detail_Layout from "../pages/universe/episodes/[episode_id]/layout";
 import Universe_Characters_Detail_Layout from "../pages/universe/characters/[character_id]/layout";
+import WS_Ideas_Page from "../pages/ws/idea/page";
+import WS_Idea_Detail_Page from "../pages/ws/idea/[idea_id]/page";
 
 export type PagePath = GuestPagePath | AuthPagePath;
 export type GuestPagePath = "/login";
 export type AuthPagePath = WSPagePath;
-export type WSPagePath = "/ws" | "/ws/settings" | "/ws/universes" | "/ws/universes/new";
+export type WSPagePath =
+  | "/ws"
+  | "/ws/settings"
+  | "/ws/universes"
+  | "/ws/universes/new"
+  | "/ws/ideas"
+  | "/ws/ideas/:idea_id";
 export type UniversePagePath =
   | "/universes/:universe_id"
   | "/universes/:universe_id/episodes"
@@ -63,6 +80,18 @@ export const wsPageLinkConfig: PageLinkConfig<AuthPageProps, WSPagePath> = {
     name: "設定",
     page: WS_Settings_Page,
     icon: SettingsIcon,
+  },
+  "/ws/ideas": {
+    path: "/ws/ideas",
+    name: "アイデア",
+    page: WS_Ideas_Page,
+    icon: LightbulbIcon,
+  },
+  "/ws/ideas/:idea_id": {
+    path: "/ws/ideas/:idea_id",
+    parentPath: "/ws/ideas",
+    name: "詳細",
+    page: WS_Idea_Detail_Page,
   },
 };
 export const universePageLinkConfig: PageLinkConfig<AuthPageProps, UniversePagePath> = {
